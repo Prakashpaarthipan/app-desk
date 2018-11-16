@@ -1,0 +1,249 @@
+<span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start">﻿</span><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_end">﻿</span> 
+
+<div class="page-content-wrap">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Employee Notice List</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        </ul>
+                    </div>
+
+                      
+
+                        <div class="col-md-12">                        
+                        
+                            <div class="panel panel-default tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab9" data-toggle="tab" aria-expanded="false"><b>YOUR NOTICE</b></a></li>
+                                    <li class=""><a href="#tab8" data-toggle="tab" aria-expanded="false"><b>ASSIGNED STATUS</b></a></li>
+                                    
+                                    <div class="panel-body" style="padding-top: 10PX; padding-bottom: 10PX;  border-top: 2px solid #ddd;border-left: 2px solid #ddd;
+                                             border-right: 2px solid #ddd;">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                        <label class="col-md-3 control-label" id='remarks'>AUTHORIZED BY</label>
+                                                    <div class="col-md-8 col-xs-12">
+                                                         <select class="form-control custom-select chosn" autofocus tabindex='4' required name='auth_by' id='auth_by' onChange="" data-toggle="tooltip" data-placement="top" data-original-title="Top Core" >
+                                                      
+                                                        <option value='20118'>MD</option>
+                                                        <option value='43400'>PS MADAM</option>
+                                                        <option value='21344'>SK SIR</option>
+                                                        <option value='452'>ADMIN GM</option>
+                                                    </select>
+                                                    
+                                                    </div>
+                                                    <div class="col-md-1 col-xs-12">
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="1" tabindex='5' id="all" name="all"/> All</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ul>
+                                <div class="panel-body tab-content">
+                                    <div class="tab-pane" id="tab8">
+                                       <div class="panel-body">
+
+                                        <table  class="table datatable table-striped"">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center" style='text-align:center'>S.No</th>
+                                                    <th class="center" style='text-align:center;width: 100px;'>NOTICE NO.</th>
+                                                    <th class="center" style='text-align:center'>EMPLOYEE</th>
+                                                    <th class="center" style='text-align:center'>REMARKS</th>
+                                                    <th class="center" style='text-align:center'>NOTICE</th>
+                                                    <th class="center" style='text-align:center'>AUTHOURIZED BY</th>
+                                                    <th class="center" style='text-align:center'>REPLY</th>
+                                                    <th class="center" style='text-align:center'>REPLY DATE</th>
+                                                    <th class="center" style='text-align:center'>ACTION</th>
+                                                    <th class="center" style='text-align:center'>PRINT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            [insert_php]  $sql_search = select_query_json("Select UI.USRCODE,to_char(emnt.edtdate,'dd/MM/yyyy HH:mi:ss AM') edtdate1,(select empname from employee_office where empsrno=emnt.autsrno) assignuser, emnt.*, emp.empname,emp.empcode From employee_notice_detail emnt, employee_office emp,USERID UI where emnt.EMPSRNO = emp.empsrno AND UI.USRCODE=EMNT.ADDUSER AND EMNT.ADDUSER='".$_SESSION['tcs_usrcode']."' ORDER BY NOTNUMB DESC", "Centra", 'TEST');
+                                            $ki = 0;
+                                            for($k=0;$k<sizeof($sql_search);$k++){
+                                                 $ki++;
+                                                  [/insert_php]
+                                                  <tr class="odd gradeX" style='background-color:[insert_php] echo $bgclr [/insert_php]; color:[insert_php] echo $clr [/insert_php];'>
+                                                    <td class="center" style='text-align:center;'>
+                                                        [insert_php] echo $ki;[/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center;width: 100px;'>
+                                                        [insert_php] echo $sql_search[$k]['NOTYEAR'].'-'.$sql_search[$k]['NOTNUMB'];  [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                        [insert_php] echo $sql_search[$k]['EMPCODE'].' - '.$sql_search[$k]['EMPNAME']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:left; '>
+                                                        [insert_php] echo $sql_search[$k]['REMARKS']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                       [insert_php]  $num=explode('-',$sql_search[$k]['NOTNAME']);
+															$num=intval($num[1]);
+																if($num>10){  $bg_clr_class='label-danger';}
+																if($num>5 && $num<=10){  $bg_clr_class='label-warning'; }
+																if($num>0 && $num<=5){  $bg_clr_class='label-success'; }
+															
+														[/insert_php]
+														<div   style=" text-align:center;line-height: 35px; padding-left: 10px;"><span class="label [insert_php] echo $bg_clr_class;[/insert_php] label-form"><b> [insert_php] echo $sql_search[$k]['NOTNAME'];[/insert_php]</b></span></div>
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                        [insert_php] echo $sql_search[$k]['ASSIGNUSER']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:left'>
+                                                        [insert_php] echo $sql_search[$k]['EMP_REMARKS']; [/insert_php]
+                                                    <td class="center" style='text-align:left'>
+                                                        [insert_php] echo $sql_search[$k]['EDTDATE1']; [/insert_php]
+                                                    </td>
+
+                                                    <td class="center" style='text-align:center' id="[insert_php] echo $sql_search[$k]['NOTYEAR'];[/insert_php]-[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]">
+                                                        [insert_php] if($sql_search[$k]['EMP_STATUS']=='Y'){if($sql_search[$k]['NOTSTAT']!=''){[/insert_php]
+                                                               
+                                                                [insert_php]  if($sql_search[$k]['NOTSTAT']=='A'){[/insert_php]
+                                                                    <div   style=" text-align:center;line-height: 35px; padding-left: 10px;"><span class="label label-success label-form"><b>APPROVED</b></span></div>
+                                                                    [insert_php]}if($sql_search[$k]['NOTSTAT']=='R'){[/insert_php]
+                                                                     <div   style=" text-align:center;line-height: 35px; padding-left: 10px;"><span class="label label-danger label-form"><b>DENIED</b></span></div>
+                                                                    [insert_php]}[/insert_php]
+                                                            [insert_php]}else{[/insert_php]
+                                                                <a onclick="approve('[insert_php] echo $sql_search[$k]['NOTYEAR'];[/insert_php]','[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]','1');" class="btn btn-success btn-sm"><span class="fa fa-thumbs-up"></span></a>
+                                                                <a onclick="approve('[insert_php] echo $sql_search[$k]['NOTYEAR'];[/insert_php]','[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]','2');" class="btn btn-danger btn-sm"><span class="fa fa-thumbs-down"></span></a>
+                                                            [insert_php]}}[/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center'><!-- for USER DETAIL-->
+                                                        <a onclick="printpage('[insert_php]echo $sql_search[$k]['NOTYEAR'];[/insert_php]','[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]');" class="btn btn-warning btn-sm"><span class="fa fa-eye"></span></a>
+                                                       
+                                                    </td>
+                                                    
+                                                </tr>
+                                                [insert_php]
+                                            } [/insert_php]
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                    </div>
+                                    <div class="tab-pane active" id="tab9">
+                                     
+                                            <div class="panel-body">
+
+                                        <table  class="table datatable table-striped"">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center" style='text-align:center'>S.No</th>
+                                                    <th class="center" style='text-align:center;width: 100px;'>NOTICE NO.</th>
+                                                    <th class="center" style='text-align:center'>EMPLOYEE</th>
+                                                    <th class="center" style='text-align:center'>REMARKS</th>
+                                                    <th class="center" style='text-align:center'>NOTICE</th>
+                                                    <th class="center" style='text-align:center'>AUTHOURIZED BY</th>
+													<th class="center" style='text-align:center'>REPLY</th>
+													<th class="center" style='text-align:center'>REPLY DATE</th>
+                                                    <th class="center" style='text-align:center'>PRINT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            [insert_php] $sql_search = select_query_json("Select (select empname from employee_office where empsrno=emnt.autsrno) assignuser,to_char(emnt.edtdate,'dd/MM/yyyy HH:mi:ss AM') edtdate1, emnt.*, emp.empname,emp.empcode From employee_notice_detail emnt, employee_office emp where emnt.EMPSRNO = emp.empsrno and emnt.empsrno='".$_SESSION['tcs_empsrno']."' order by notnumb desc", "Centra", 'TEST');  
+									                                                           
+                                            $ki = 0;
+                                            for($k=0;$k<sizeof($sql_search);$k++){
+                                                 $ki++;   $num=explode('-',$sql_search[$k]['NOTNAME']);
+															$num=intval($num[1]);
+																if($num>10){ $bg_clr_class='label-danger';}
+																if($num>5 && $num<=10){ $bg_clr_class='label-warning'; }
+																if($num>0 && $num<=5){ $bg_clr_class='label-success'; }[/insert_php]
+                                                    <tr class="odd gradeX">
+                                                    <td class="center" style='text-align:center;'>
+                                                        [insert_php] echo $ki; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center;width: 100px;'>
+                                                       [insert_php] echo $sql_search[$k]['NOTYEAR'].'-'.$sql_search[$k]['NOTNUMB'];  [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                        [insert_php] echo $sql_search[$k]['EMPCODE'].' - '.$sql_search[$k]['EMPNAME']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:left;width:600px;'>
+                                                        [insert_php] echo $sql_search[$k]['REMARKS']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                        
+														<div   style=" text-align:center;line-height: 35px; padding-left: 10px;"><span class="label [insert_php] echo $bg_clr_class;[/insert_php] label-form"><b> [insert_php]  echo $sql_search[$k]['NOTNAME'];[/insert_php]</b></span></div>
+                                                    </td>
+                                                    <td class="center" style='text-align:center'>
+                                                      [insert_php] echo $sql_search[$k]['assignuser']; [/insert_php]
+                                                    </td>
+													<td class="center" style='text-align:left'>
+                                                        [insert_php] if($sql_search[$k]['EMP_STATUS']=='Y')
+                                                            {echo $sql_search[$k]['EMP_REMARKS']; [/insert_php]
+                                                        [insert_php]  if($sql_search[$k]['NOTSTAT']=='A'){[/insert_php]
+                                                            <div   style=" text-align:left;line-height: 35px; padding-left: 10px;"><span class="label label-success label-form"><b>APPROVED</b></span></div>
+                                                            [insert_php]}if($sql_search[$k]['NOTSTAT']=='R'){[/insert_php]
+                                                             <div   style=" text-align:left;line-height: 35px; padding-left: 10px;"><span class="label label-danger label-form"><b>DENIED</b></span></div>
+                                                            [insert_php]}if($sql_search[$k]['NOTSTAT']==''){[/insert_php]
+                                                            <div   style=" text-align:left;line-height: 35px; padding-left: 10px;"><span class="label label-warning label-form"><b>WAITING FOR REPLY</b></span></div>
+                                                            [insert_php]}}[/insert_php]
+                                                    </td>
+													<td class="center" style='text-align:left'>
+                                                        [insert_php] echo $sql_search[$k]['EDTDATE1']; [/insert_php]
+                                                    </td>
+                                                    <td class="center" style='text-align:center; width:100px;'>
+														[insert_php]if($sql_search[$k]['EMP_STATUS']!='Y'){[/insert_php]
+                                                        <a type="hidden" onclick="showreply('[insert_php] echo $sql_search[$k]['NOTYEAR'];[/insert_php]','[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]')" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>[insert_php]}[/insert_php]
+                                                        <a onclick="printpage('[insert_php] echo $sql_search[$k]['NOTYEAR'];[/insert_php]','[insert_php]echo $sql_search[$k]['NOTNUMB'];[/insert_php]');" class="btn btn-warning btn-sm"><span class="fa fa-eye"></span></a>
+                                                        [insert_php] //echo $sql_search[$k]['EMPNAME'];echo $sql_search[$k]['EMPCODE']; [/insert_php]
+                                                    </td>
+                                                    
+                                                </tr>
+                                                [insert_php]
+                                            } [/insert_php]
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                      <!-- /////////////////////////////////// -->
+                                    </div>                       
+                                </div>
+                            </div>                                         
+                            <!-- END JUSTIFIED TABS -->
+                        </div>
+                        
+                        <!-- //////////////reply modal -->
+                        <style type="text/css">
+                            .modal-content {
+                               
+                                    background-color: #fefefe;
+                                    margin: auto;
+                                    
+                                    border: 1px solid #888;
+                                     
+                                    
+                                     overflow-x: scroll; 
+                               
+                                 
+                            }
+                            .modal-content1 {
+                                background-color: #fefefe;
+                                margin: auto;
+                                padding: 20px;
+                                border: 1px solid #888;
+                                width: 40%;
+                                height: 250px;
+                                overflow-x: scroll;
+                            }
+
+                        </style>
+
+                        <div class="page-title">
+                        <div id="myModal1" class="modal">
+                          <!-- Modal content -->
+                          <span class="close">&times;</span>
+                          <div id="modal_data" class="modal-content1">
+                                    <textarea id="message" maxlength=250 name="message" malength=250 type="text" tabindex="3" class="form-control" style="text-transform:uppercase; height:100px; padding-right: 5px;" multiple placeholder="TCS Messages.."></textarea>
+                                    <center><input type="button" class="btn btn-success" value="SEND" onclick="reply()"/></center>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>

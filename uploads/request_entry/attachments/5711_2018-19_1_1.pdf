@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<!-- saved from url=(0131)http://www.tcsportal.com/approval-desk-test/view_pending_approval1.php?action=view&reqid=5667&year=2018-19&rsrid=1&creid=4&typeid=3 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- META SECTION -->
+<title>View Approval :: Approval Desk :: The Chennai Silks</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" href="http://www.tcsportal.com/approval-desk-test/favicon.ico" type="image/x-icon">
+<!-- END META SECTION -->
+
+<!-- CSS INCLUDE -->
+<link rel="stylesheet" type="text/css" id="theme" href="./app_files/theme-default.css">
+<!-- EOF CSS INCLUDE -->
+<style type="text/css">
+    .form-horizontal .control-label { padding-top: 0px !important; }
+    .print_table th,
+    .print_table td {
+        border:1px solid #a0a0a0 !important;
+        text-align: center !important;
+        font-weight: normal;
+    }
+</style>
+</head>
+<body>
+    <!-- START PAGE CONTAINER -->
+    <div class="page-container page-navigation-top-fixed">
+
+        <!-- START PAGE SIDEBAR -->
+        <div class="page-sidebar">
+            <!-- START X-NAVIGATION -->
+            <style>
+  .xn-profile a:hover{
+    background: #fff !important;
+  }
+</style>
+<ul class="x-navigation">
+    <li class="xn-logo">
+        <a href="http://www.tcsportal.com/approval-desk-test/home.php" style="padding: 0px !important;"><img src="./app_files/logo.png" style="padding: 5px 2px;" alt="The Chennai Silks"></a>
+        <a href="http://www.tcsportal.com/approval-desk-test/view_pending_approval1.php?action=view&amp;reqid=5667&amp;year=2018-19&amp;rsrid=1&amp;creid=4&amp;typeid=3#" class="x-navigation-control"></a>
+    </li>
+    <li class="xn-profile" style="background:#fff">
+        <a href="http://www.tcsportal.com/approval-desk-test/home.php" class="profile-mini">
+            <img src="./app_files/logo-original.png" alt="The Chennai Silks - Logo">
+        </a>
+        
+        <div class="profile">
+            <div class="profile-data">
+                <div class="profile-data-name"><b>SIVARANJANI PALANIVEL</b></div>
+                <div class="profile-data-title">INFO TECH</div>
+            </div>
+        </div>
+    </li>
+        <li class="">
+        <a href="http://www.tcsportal.com/approval-desk-test/home.php"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboard</span></a>
+    </li>
+    <li class="xn-openable ">
+        <a href="javascript:void(0)"><span class="fa fa-fw fa-list-alt"></span> <span class="xn-text">Approval Request</span></a>
+        <ul>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/request_entry.php"><span class="fa fa-edit"></span>New Request Entry</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/request_list.php"><span class="fa fa-table"></span>Request List</a></li>
+                        <li class=""><a href="http://www.tcsportal.com/approval-desk-test/waiting_approval.php"><span class="fa fa-check-square"></span>Waiting for Approval</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/waiting_query.php"><span class="fa fa-question-circle"></span>Waiting With Query</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/search-result.php"><span class="fa fa-search"></span>Search Result</a></li>
+        </ul>
+    </li>
+    <li class="xn-openable ">
+        <a href="javascript:void(0)"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Reports</span></a>
+        <ul>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk/approved_approvals_list.php#/Approved%20Approvals"><span class="fa fa-check-circle-o"></span>Approved Approvals</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk/approved_approvals_list.php#/Pending%20Approvals"><span class="fa fa-exclamation-triangle"></span>Pending Approvals</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk/approved_approvals_list.php#/Rejected%20Approvals"><span class="fa fa-times-circle"></span>Rejected Approvals</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk/approved_approvals_list.php#/Internal%20Verification%20Approvals"><span class="fa fa-check-circle-o"></span>Internal Verification Approvals</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/acknowledge_approvals.php"><span class="fa fa-thumbs-o-up"></span>Acknowledge Alternate Approvals</a></li>
+        </ul>
+    </li>
+
+    <li class="xn-openable ">
+        <a href="javascript:void(0)"><span class="fa fa-bullhorn"></span> <span class="xn-text">Requirement</span></a>
+        <ul>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/process_requirement_entry.php"><span class="fa fa-edit"></span>Requirement Entry</a></li>
+            <li class=""><a href="http://www.tcsportal.com/approval-desk-test/process_requirement_list.php"><span class="fa fa-check-square-o"></span>Requirement List</a></li>
+        </ul>
+    </li>
+    </ul>
+            <!-- END X-NAVIGATION -->
+        </div>
+        <!-- END PAGE SIDEBAR -->
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+
+            <!-- START X-NAVIGATION VERTICAL -->
+            <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+    <!-- TOGGLE NAVIGATION -->
+    <li class="xn-icon-button">
+        <a href="javascript:void(0)" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+    </li>
+    <!-- END TOGGLE NAVIGATION -->
+    <!-- SEARCH -->
+    <li class="xn-search" style="display: none;">
+            </li>   
+    <!-- END SEARCH -->
+    <!-- SIGN OUT -->
+    <li class="xn-icon-button pull-right">
+        <a href="javascript:void(0)" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+    </li> 
+    <!-- END SIGN OUT -->
+    <!-- MESSAGES -->
+        <li class="xn-icon-button pull-right">
+        <a href="javascript:void(0)"><span class="fa fa-th fa-fw"></span></a>
+                <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="fa fa-th fa-fw"></span> CHOOSE MODULE</h3>                                
+                <div class="pull-right">
+                                    </div>
+            </div>
+            <div class="panel-body list-group list-group-contacts scroll" style="height: 250px;">
+                                                
+                
+                                    <div class="col-lg-4 text-center module_active" style="padding:15px 5px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/home.php"><i class="fa fa-check-square fa-fw"></i></a><div style="font-size:10px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/home.php" style="padding: 0px !important;">APPROVAL DESK</a>
+                        <span style="border:1px solid;background-color: #333;border-radius: 3px;padding: 2px 5px;color: white;">0</span></div></div>
+                                
+                                
+                                
+                                
+                
+                
+                            </div>
+                    </div>                        
+    </li>
+    <!-- END MESSAGES -->
+
+
+    <li class="xn-icon-button pull-right">
+        <a href="javascript:void(0)" class="blink_me"><span class="fa fa-bullhorn fa-fw"></span></a>
+        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="fa fa-bullhorn fa-fw"></span> CHOOSE REQUIREMENT</h3>                                
+                <div class="pull-right">
+                </div>
+            </div>
+            <div class="panel-body list-group list-group-contacts scroll" style="height: 250px;">
+                <div class="col-lg-6 text-center" style="padding:15px 5px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/process_requirement_entry.php" target="_blank"><i class="fa fa-edit fa-fw"></i></a><div style="font-size:12px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/process_requirement_entry.php" style="padding: 0px !important;" target="_blank">Requirement Entry</a></div></div>
+                <div class="col-lg-6 text-center" style="padding:15px 5px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/process_requirement_list.php" target="_blank"><i class="fa fa-check-square-o fa-fw"></i></a><div style="font-size:12px;"><a class="text-center" href="http://www.tcsportal.com/approval-desk-test/process_requirement_list.php" style="padding: 0px !important;" target="_blank">Requirement List</a></div></div>
+            </div>
+        </div>                        
+    </li>
+
+    <!-- HELP -->
+    <li class="xn-icon-button pull-right">
+                <a href="http://www.tcsportal.com/approval-desk-test/user_manual.php" title="Click here to View User Manual"><span class="fa fa-chain" title="Click here to View User Manual"></span></a>
+    </li> 
+    <!-- END HELP -->
+
+        <!-- TASKS -->
+    </ul>
+
+<script type="text/javascript">
+    function blinker() {
+        $('.blink_me').fadeOut(100);
+        $('.blink_me').fadeIn(800);
+    }
+    setInterval(blinker, 1000);
+
+    /* function call_user_manual() {
+        window.location = "user_manual.php";
+    } */
+
+    /* function loadiframe(htmlHref) //load iframe
+    {
+        document.getElementById('targetiframe').src = htmlHref;
+    }
+
+    function unloadiframe() //just for the kicks of it
+    {
+        var frame = document.getElementById("targetiframe"),
+        frameHTML = frame.contentDocument || frame.contentWindow.document;
+        frameHTML.removeChild(frameDoc.documentElement);    
+    } */
+</script>            <!-- END X-NAVIGATION VERTICAL -->
+
+            <!-- START BREADCRUMB -->
+            <ul class="breadcrumb">
+                <li><a href="http://www.tcsportal.com/approval-desk-test/home.php">Dashboard</a></li>
+                <li><a href="http://www.tcsportal.com/approval-desk-test/request_list.php">Approval Request List</a></li>
+                <li class="active">View Request</li>
+            </ul>
+            <!-- END BREADCRUMB -->
+
+            <!-- PAGE CONTENT WRAPPER -->
+            <div class="page-content-wrap">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <form class="form-horizontal" role="form" id="frm_request_entry" name="frm_request_entry" action="http://www.tcsportal.com/approval-desk-test/view_pending_approval1.php?action=view&amp;reqid=5667&amp;year=2018-19&amp;rsrid=1&amp;creid=4&amp;typeid=3" method="post" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" name="function" id="function" tabindex="1" value="request_entry">
+                        <div class="panel panel-default">
+                            <div id="result"></div> <!-- Display the Process Status -->
+                            
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><strong>View Request - <span class="highlight_redtitle">ADMIN / OFFICE 4005667 / 14-09-2018 / 5667 / 04:26 PM</span>
+                                <input type="hidden" name="hid_aprnumb" id="hid_aprnumb" value="ADMIN / OFFICE 4005667 / 14-09-2018 / 5667 / 04:26 PM">
+                                <input type="hidden" name="hid_appattn_cnt" id="hid_appattn_cnt" value="1"></strong></h3>
+                                <ul class="panel-controls">
+                                    <li>                                        <span class="label label-info label-form badge-ap3">AP-3 - HOD &amp; MANAGER WORK ORDERS - DELEGATE</span> <span class="label label-info label-form" style="background-color:#299654">Due Date : 3 Days &amp; Process Date : 0 Days</span></li>
+                                    <li class="label label-info label-form">NOT YET APPROVED</li>
+                                    <li><a href="javascript:void(0)" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <!-- New -->
+                                        <input type="hidden" name="slt_project_type" id="slt_project_type" value="R">
+                                        <input type="hidden" name="slt_topcore_name" id="slt_topcore_name" value="ADMIN">
+                                        <input type="hidden" name="hid_slt_subcore_name" id="hid_slt_subcore_name" value="INFO TECH">
+                                        <input type="hidden" name="slt_topcore" id="slt_topcore" value="4">
+                                        <input type="hidden" name="hid_slt_subcore" id="hid_slt_subcore" value="20">
+                                        <input type="hidden" name="slt_subcore" id="slt_subcore" value="20">
+
+                                        <input type="hidden" name="hidd_depcode" id="hidd_depcode" value="">
+                                        <input type="hidden" name="hidd_depname" id="hidd_depname" value="">
+                                        <input type="hidden" name="hidd_expsrno" id="hidd_expsrno" value="">
+                                        <input type="hidden" name="hidd_multireq" id="hidd_multireq" value="N">
+                                        <input type="hidden" name="slt_targetno" id="slt_targetno" value="N">
+                                        <!-- New -->
+
+                                        <input type="hidden" name="slt_subtype" id="slt_subtype" value="1">
+                                        <input type="hidden" name="slt_submitfor" id="slt_submitfor" value="0">
+                                        <input type="hidden" name="txt_kind_attn" id="txt_kind_attn" value="0">
+                                        <input type="hidden" name="txtsubject" id="txtsubject" value="0">
+                                        <input type="hidden" name="currentyr" id="currentyr" value="">
+                                        <input type="hidden" name="txt_purhead" id="txt_purhead" value="">
+                                                                                <input type="hidden" name="txt_rptmode" id="txt_rptmode" value="1">
+
+                                        <div id="id_topcore" style="display: none;">
+                                        <!-- Top Core -->
+                                        <div class="form-group trbg"></div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Top Core -->
+                                        </div>
+
+                                        <div id="id_subcore" style="display: none;">
+                                        <!-- Sub Core -->
+                                        <div class="form-group trbg"></div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Sub Core -->
+                                        </div>
+
+                                        <!-- Project -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Project <span style="color:red">*</span></label>
+                                            <div class="col-md-9">
+                                                                                                    :                                                                                             </div>
+                                        </div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Project -->
+
+                                        <!-- Type of Submission Type -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Type of Submission <span style="color:red">*</span></label>
+                                            <div class="col-md-9 col-xs-12">
+                                                                                                    : POLICY                                                    <input type="hidden" name="hid_slt_submission" id="hid_slt_submission" value="3">
+                                                    <input type="hidden" name="slt_submission" id="slt_submission" value="3">
+                                                                                            </div>
+                                        </div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Type of Submission Type -->
+
+                                        <div id="id_branch">
+                                                                                </div>
+                                        <div class="tags_clear"></div>
+
+                                        <!-- Approval Subject -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Approval Subject <span style="color:red">*</span></label>
+                                            <div class="col-md-9 col-xs-12">
+                                                                                                    : EXISTING POLICY ALTER / RENEWAL APPROVAL                                                                                             </div>
+                                        </div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Approval Subject -->
+
+                                                                                <!-- Specific Subject -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Specific Subject</label>
+                                            <div class="col-md-9 col-xs-12">
+                                                :                                             </div>
+                                        </div>
+                                        <div class="tags_clear"></div>
+                                        <!-- Specific Subject -->
+                                        
+
+                                        <!-- Initiator & Attachments Panel -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><strong>Initiator &amp; Attachments</strong></h3>
+                                                                                            </div>
+                                            <div class="panel-body">
+                                                                                                    <!-- Work Initiate Person -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Work Initiate Person <span style="color:red">*</span></label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            : 14442 - <b>ARUN RAMA BALAN G</b> (TECH LEAD) - INFO TECH                                                         </div>
+                                                    </div>
+                                                    <div class="tags_clear"></div>
+                                                    <!-- Work Initiate Person -->
+                                                
+                                                  <!-- Responsible Person -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Responsible Person <span style="color:red">*</span></label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                        : 20156 - <b>KAMATCHI GOPALAKRISHNAN</b> (TRAINEE) - INFO TECH                                                     </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Responsible Person -->
+
+                                                <!-- Alternate User -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Alternate User</label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                        : 20168 - <b>VINOTHINI SELVARAJ</b> (TRAINEE) - INFO TECH                                                     </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Alternate User -->
+
+                                                <!-- Attachments -->
+                                                <!-- Quotations -->
+                                                
+                                                <div class="tags_clear"></div>
+                                                <!-- Quotations -->
+
+
+                                                <!-- Approval Supporting Documents -->
+                                                                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Budget / Common / Reference Approval</label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                                                                            <div class="clear clear_both" style="min-height:1px;"></div>
+                                                        <div><ul id="lightgallery" class="list-unstyled row lightgallery" style="float:left; margin-left:5px;"></ul><a href="http://www.tcsportal.com/approval-desk-test/ftp_image_view_pdf.php?pic=5667_3_4_2018-19_fieldimpl_p_0.pdf&amp;path=approval_desk/request_entry/fieldimpl/" target="_blank" class="style_box">5667_3_4_2018-19_fieldimpl_p_0.pdf</a><br><br><ul id="lightgallery" class="list-unstyled row lightgallery" style="float:left; margin-left:5px;"></ul>                                                            </div>
+                                                        <div class="clear clear_both" style="min-height:1px;"></div>
+                                                    </div>
+                                                </div>
+                                                                                                <div class="tags_clear"></div>
+                                                <!-- Approval Supporting Documents -->
+
+                                                <!-- Color Photo Sample / Artwork -->
+                                                                                                <div class="tags_clear"></div>
+                                                <!-- Color Photo Sample / Artwork -->
+
+                                                <!-- Artwork -->
+                                                                                                <div class="tags_clear"></div>
+                                                <!-- Artwork -->
+
+                                                <!-- Consultant Approval -->
+                                                                                                <div class="tags_clear"></div>
+                                                <!-- Consultant Approval -->
+                                                <!-- Attachments -->
+
+                                                <!-- Warranty / Guarantee -->
+                                                                                                <!-- Warranty / Guarantee -->
+
+                                                <!-- Current / Closing Stock -->
+                                                                                                <!-- Current / Closing Stock -->
+
+                                                <!-- Advance or Final Payment / Work Completion Percentage -->
+                                                                                                <!-- Advance or Final Payment / Work Completion Percentage -->
+
+                                                <!-- Work Finish Target Date -->
+                                                                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Work Finish Target Date</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            : 14-SEP-2018                                                        </div>
+                                                    </div>
+                                                    <div class="tags_clear"></div>
+                                                                                                <!-- Work Finish Target Date -->
+
+
+
+                                                <!-- Agreement Expiry Date -->
+                                                                                                <div class="form-group" id="id_datepicker_example7">
+                                                    <label class="col-md-3 control-label">Agreement Expiry Date</label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                        : 14-SEP-2018                                                    </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                                                                <!-- Agreement Expiry Date -->
+
+                                                <!-- Agreement Advance Amount -->
+                                                                                                <!-- Agreement Advance Amount -->
+
+                                            </div>
+                                        </div>
+                                        <!-- Initiator & Attachments Panel -->
+
+
+
+                                        <!-- Process Flow Panel -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><strong>Process</strong></h3>
+                                                <ul class="panel-controls">
+                                                    <li style="font-weight: bold;">
+                                                        Prepared By : 22813 - <b>SIVARANJANI PALANIVEL</b>                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="panel-body">
+                                                <!-- Related Approval Nos -->
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="col-md-3 control-label">Related Approval Nos</label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                                                                                            <a target="_blank" href="http://www.tcsportal.com/approval-desk-test/view_pending_approval.php?action=view&amp;reqid=&amp;year=&amp;rsrid=1&amp;creid=&amp;typeid=" title="View" alt="View" style="color:; font-weight:normal; font-size:10px;"></a><br>
+                                                                                                                    </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Related Approval Nos -->
+
+                                                <div class="form-group trbg" id="getmonthwise_budget" style="display:none;">
+                                                    <div class="col-lg-3 col-xs-3">Budget Planner ₹</div>
+                                                    <div class="col-lg-9 col-xs-9"> :
+                                                        <div id="id_budplanner"></div>
+                                                        <div>
+                                                            <table style="clear:both; float:left; width:100%;">
+                                                            <tbody><tr><td>
+                                                                <table class="monthyr_wrap" style="width:100%;">
+                                                                                                                                            <tbody><tr><td colspan="2" style="width:40%; padding-top:2%; text-align:right; padding-right:5%; font-weight:bold;">TOTAL : </td><td style="width:60%; padding-top:2%; font-weight:bold;"><span id="ttl_mntyr">0</span></td></tr>
+                                                                </tbody></table>
+                                                            </td></tr>
+                                                            </tbody></table>
+                                                        </div>
+                                                        <div class="tags_clear"></div>
+                                                    </div>
+                                                    <div class="tags_clear"></div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+
+
+
+
+
+                                                
+
+                                                <!-- Process Duration -->
+                                                <div class="form-group trbg" style="min-height:90px; display:none">
+                                                    <div class="col-lg-3 col-xs-3">
+                                                        <label style="height:27px;">Process Duration <span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-xs-9">
+
+                                                    <div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <b>From Date</b> : 14-SEP-2018 04:23:45 PM                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <b>To Date</b> : 14-SEP-2018 04:23:45 PM                                                    </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                        <div>
+                                                        <div class="col-lg-12 col-md-12">
+                                                                                                                    <b>No of Hours</b> : 24                                                                                                                </div>
+
+                                                        <div class="col-lg-12 col-md-12">
+                                                                                                                    <b>No of Days</b> : 1                                                                                                                </div>
+                                                        </div>
+                                                        <div class="tags_clear"></div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Process Duration -->
+
+                                                <input type="hidden" class="form-control" placeholder="Productwise Budget" onkeypress="return isNumber(event)" required="required" maxlength="1" name="txt_prodwise_budget" id="txt_prodwise_budget" readonly="" value="0" data-toggle="tooltip" data-placement="top" title="Productwise Budget">
+                                                <div id="id_reqvalue_hidden">
+                                                    <input type="hidden" class="form-control hidn_balance" placeholder="Request Value" onkeypress="return isNumber(event)" maxlength="9" name="hidrequest_value" id="hidrequest_value" readonly="" value="0" data-toggle="tooltip" data-placement="top" title="Request Value">
+                                                                                                    </div>
+
+
+
+                                                <!-- Request Value -->
+                                                <div id="id_reqvalue">
+                                                                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Request Value -->
+
+                                                <!-- Implementation Due Date -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Implementation Due Date <span style="color:red">*</span></label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                        : 28-SEP-2018                                                    </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Implementation Due Date -->
+
+
+                                                <!-- Branch -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Branch <span style="color:red">*</span></label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                                                                                    : CWH                                                                                                            </div>
+                                                </div>
+                                                <div class="tags_clear"></div>
+                                                <!-- Branch -->
+
+
+                                                <div id="id_approval_listings">
+                                                                                                    <div class="form-group trbg" style="text-align: right;">
+                                                        <div class="col-lg-3 col-xs-3">
+                                                            <label style="height:27px;">Next Approval Flow <span style="color:red">*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xs-9" style="font-weight:normal; text-align: left;">
+                                                            : <span style="font-weight: bold;">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                SIVALINGAM.N.  - 1062 [ 1 Day(s) ] <br>KUMARAN K - 1986 [ 1 Day(s) ] <br>GANESH L  - 2001 [ 1 Day(s) ] <br>THERUMURTHE R.D  - 2444 [ 1 Day(s) ] <br>                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="hid_noofdays" id="hid_noofdays" value="1">
+                                                    <input type="hidden" name="hid_appuser" id="hid_appuser" value="1062~~1986~~2001~~2444~~">
+                                                                                                            <input type="hidden" name="hid_newentry" id="hid_newentry" value="1">
+                                                        <input type="hidden" name="hid_apmcd" id="hid_apmcd" value="955">
+                                                                                                        <div class="tags_clear"></div>
+                                                                                                </div>
+                                                <!-- This is list details -->
+
+                                                <div class="tags_clear"></div>
+
+
+                                                                                                <div id="id_salaryadvance" style="margin-left:15px;"></div>
+                                                <div class="tags_clear"></div>
+
+
+                                                <div id="id_advancedetails" style="margin-left:15px;"></div>
+                                                <div class="tags_clear"></div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- Process Flow Panel -->
+
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="tags_clear"></div>
+                                        <div class="form-group">
+                                                                                        <label class="col-md-3 control-label" style="text-align: left;">Details <span style="color:red">*</span> : </label>
+                                            <div class="tags_clear height10px"></div>
+                                            <div class="col-md-12" style="border: 1px solid #dadada; padding: 5px !important;">
+                                                <label class="print_table">
+                                                <p>test</p>
+                                                </label>
+                                                <div class="tags_clear"></div>
+                                            </div>
+                                        </div>
+
+                                        
+
+
+
+
+                                    
+
+                                                                            <!-- Related Approvals & Tags -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><strong>Approval Tags</strong></h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <ul class="list-tags">                                                       <li><a href="http://www.tcsportal.com/approval-desk-test/search-result.php?data=APPROVAL_NO&amp;term=ADMIN%20/%20OFFICE%204005667%20/%2014-09-2018%20/%205667%20/%2004:26%20PM&amp;process=ADMIN%20/%20OFFICE%204005667%20/%2014-09-2018%20/%205667%20/%2004:26%20PM" target="_blank" class="li_bluetags"><span class="fa fa-tag"></span> ADMIN / OFFICE 4005667 / 14-09-2018 / 5667 / 04:26 PM</a></li>
+                                                    </ul>                                                <div class="clear clear_both" style="height: 10px;"></div>
+                                            </div>
+                                            <div class="tags_clear"></div>
+
+                                        </div>
+                                        <!-- Related Approvals & Tags -->
+                                    
+
+                                        <!-- Approval Status & History -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><strong>Approval Status &amp; History</strong></h3>  
+                                                                                            </div>
+                                            <div class="panel-body">
+                                                                                                    <div class="clear clear_both" style="height: 10px;"></div>
+
+
+                                                                                                                <!-- Approval Status -->
+                                                            <div class="alert alert-info" role="alert">
+                                                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                                <strong>NOT YET APPROVED</strong>
+                                                            </div>
+                                                                                                                <div class="tags_clear"></div>
+                                                        </div>
+                                                        <div class="clear clear_both" style="height: 10px;"></div>
+                                                        <input type="hidden" name="hid_balance" id="hid_balance" value="0">
+
+                                            </div>
+                                            <div class="tags_clear"></div>
+                                        </div>
+                                        <!-- Approval Status & History -->
+
+                                    </div>
+                                  </div>
+                              <table class="table table-bordered">
+                                                                
+                              </table>
+                              <div class="tags_clear"></div>
+
+
+                        <!-- Supplier Quotation -->
+                        <div id="id_supplier" style="margin: 0px 5px; text-align: center;">
+                        
+                                </div>
+                                <div class="clear"></div>
+
+                            </div>
+                            <!-- ----Supplier Quotation -->
+
+                            <div class="tags_clear"></div>
+                            <div class="tags_clear"></div>
+                            <div class="clear"></div>
+
+
+                            							<div class="row">
+						
+							<div class="col-md-12">
+
+								
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title"><strong>POLICY APPROVAL</strong></h3>
+										<ul class="panel-controls">
+											<li><a href="http://www.tcsportal.com/approval-desk-test/view_pending_approval1.php?action=view&amp;reqid=5667&amp;year=2018-19&amp;rsrid=1&amp;creid=4&amp;typeid=3#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+										</ul>
+									</div>
+
+
+									<div class="panel-body">
+
+                                  
+										<div class="row">
+											
+												
+											   <div class="form-group">
+													<label class="col-md-2 control-label">POLICY SUBJECT<span style="color:red">*</span></label>
+													<div class="col-md-10">
+													 : SALARY ADVANCE POLICY  														
+													</div>
+												</div>
+												<!-- priority filed drop down -->
+												
+												<div class="col-md-6">
+												<div class="form-group">
+													<label class="col-md-3 control-label">EFFECTIVE DATE<span style="color:red">*</span></label>
+													<div class="col-md-9 col-xs-12">
+                                                        : 15-SEP-2018                                                    </div>
+																</div>
+																
+												
+												<!-- tilte text feild -->
+												
+												<div class="form-group">
+                                                    <label class="col-md-3 control-label">VALID UPTO<span style="color:red">*</span></label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                       
+                                                       : 27-SEP-2018                                                    </div>
+                                                </div>
+												
+												<div class="form-group">
+                                                    <label class="col-md-3 control-label">APPROVAL DATE<span style="color:red">*</span></label>
+                                                      <div class="col-md-9 col-xs-12">
+                                                        : 30-SEP-2018                                                    </div>
+                                                </div>
+												<div class="form-group">
+                            <label class="col-md-3 control-label">USERLIST </label>
+                            <div class="col-md-9 col-xs-12">
+                                <b>
+                                   : 1200 - <b>KUMAR B </b> -SUPERVISOR - SYN.DRESSMATERIAL      					    
+                            </b></div><b>
+							</b></div><b>
+                        
+																								
+												                                                 <div class="form-group">
+                                                    <label class="col-md-3 control-label">DESK PROCEDURE</label>
+                                                    <div class="col-md-9 col-xs-12">
+                                                                                                            <div class="clear clear_both" style="min-height:1px;"></div>
+                                                        <div><ul id="lightgallery" class="list-unstyled row lightgallery" style="float:left; margin-left:5px;"></ul>                                                            </div>
+                                                        <div class="clear clear_both" style="min-height:1px;"></div>
+                                                    </div>
+                                                </div>
+                                                                                                <div class="tags_clear"></div>
+												
+                                                <!-- Approval Supporting Documents -->
+												
+												<div class="form-group">
+                                                    <label class="col-md-3 control-label">POLICY DOCUMENTS<span style="color:red">*</span></label>
+                                                    <div class="col-md-9 col-xs-12">
+													 : tesrt file 													</div>
+                                                </div>
+												</b></div><b>
+												<!-- Approval Supporting Documents -->
+                                               
+
+
+
+<!--fix me-->
+											<div class="col-md-6">
+												<!-- core drop down -->
+												<div class="form-group">
+													<label class="col-md-3 control-label">POLICY TYPE</label>
+													<div class="col-md-9">
+													 : ORIGINAL 													</div>
+
+												</div>
+												<!--assign member-->
+
+												<div class="form-group">
+                            <label class="col-md-3 control-label">CREATOR ECNO/NAME</label>
+                            <div class="col-md-9 col-xs-12" <b="">
+								 : 1230 - <b>MURUGAN A  				   
+												  
+												 
+							              
+                            </b></div><b>
+                        </b></div><b>
+
+												<!-- Tag layout -->
+												<div class="form-group">
+                            <label class="col-md-3 control-label">CO-ORDINATOR ECNO/NAME</label>
+                            <div class="col-md-9 col-xs-12">
+                                <b>
+								: 1230 - <b>MURUGAN A  			   
+										
+                            </b></b></div><b><b>
+                        </b></b></div><b><b>
+						<div class="form-group">
+                            <label class="col-md-3 control-label">ASSIST BY ECNO/NAME</label>
+                            <div class="col-md-9 col-xs-12">
+                                <b>
+								 : 1220 - <b>KIRANRAJ G 				  
+                            </b></b></div><b><b>
+                        </b></b></div><b><b>
+										</b></b></b></b></b></div><b><b><b>
+										<div class="tags_clear"></div>
+										<div class="row">
+										<div class="col-md-6"></div>
+										<div class="col-md-6">
+												<!-- topcore drop down ValidateSingleInput(this, 'all'); -->
+											<div class="row">
+											<div class="col-md-12">
+											   <div class="form-group">
+													<label class="col-md-3 control-label"></label>
+													<div class="col-md-9" name="tags" id="id_tags_generation">
+													</div>
+												</div>
+                                            </div>
+										</div></div>
+										<div class="tags_clear"></div>
+											 <div class="col-md-6">
+  
+                                        <div class="tags_clear"></div>
+                                        <div class="form-group">
+                                                                                        <label class="col-md-3 control-label" style="text-align: left;">Details <span style="color:red">*</span> : </label>
+                                           <div class="tags_clear height10px"></div>
+                                            <div class="col-md-12" style="border: 1px solid #dadada; padding: 5px !important;">
+                                                The content might not be available!. Contact Admin - </div></div></div></div></b></b></b></b></div></div></div></div></div></form></div></div></div></div></div></body></html>

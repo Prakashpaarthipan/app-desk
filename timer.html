@@ -1,0 +1,90 @@
+<html>
+<head>
+ <link rel="stylesheet" href="../dist/newlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script type="text/javascript">
+				var clicked = false;
+				var sec = 0;
+				var last_time;
+				var clickedp=0;
+				var id;
+				var id2;
+				var sec2;
+
+				function startClock() {
+				id=document.getElementById("idd").value;
+				
+				    if (clicked === false) {
+				        clock = setInterval("stopWatch()", 1000);
+				        clicked = true;
+				    }
+				    else if (clicked === true) {
+				    }
+				}
+
+				function stopWatch() {
+				    sec++;
+				    document.getElementById("timer"+id).innerHTML = sec;
+				}
+
+				function pauseClock(){
+				id=document.getElementById("idd").value;
+					if(clickedp==0){
+					window.clearInterval(clock);
+				    clicked = false;
+				    clickedp=1;
+					}
+					else{
+						clock = setInterval("stopWatch()", 1000);
+				        clicked = true;
+				        clickedp=0;
+					}
+				}
+				
+				function switchClock(){
+					id=document.getElementById("idd").value;
+					if(document.getElementById("timer"+id).innerHTML!=0){
+					sec=document.getElementById("timer"+id).innerHTML;
+					}
+					else{
+					sec=0;
+					}
+					
+				}
+
+				function stopClock() {
+				id=document.getElementById("idd").value;
+				    window.clearInterval(clock);
+				    sec = 0;
+				    document.getElementById("timer"+id).innerHTML=0;
+				    clicked = false;
+				}
+
+	
+	</script>
+
+</head>
+<body>
+<div class="content-frame">
+
+                    <div class="row">
+                            <div class="col-sm-4">
+                                 <input type="submit" id="start-clock" value="Start" name="submit" onClick="startClock()"/>
+                                <div id="timer1">0</div><br>
+                                <div id="timer2">0</div><br>
+                                <div id="timer3">0</div><br>
+                                <div id="timer4">0</div><br>
+                                <div id="timer5">0</div><br>
+                                <input id='idd'type="text" name="id"/>
+                                <input type="submit" id="pause-clock" value="Pause" name="submit" onClick="pauseClock()"/>
+								<input type="submit" id="switch-clock" value="Switch" name="submit" onClick="switchClock()"/>
+                                <input type="submit" id="stop-clock" value="Stop" name="submit" onClick="stopClock()"/>
+                            </div>
+
+                            <div id="countdowntimer"><span id="future_date"><span></div>
+
+
+   
+                    </div>
+
+</body>
+</html>

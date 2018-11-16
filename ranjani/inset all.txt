@@ -1,0 +1,22 @@
+insert into  APPROVAL_PROJECT(APRCODE,APRNAME,APRSRNO, ADDUSER,ADDDATE,EDTUSER,EDTDATE,DELETED,DELUSER,DELDATE,ATCCODE,SELMODE,FINSHDT,BRNCODE,TOPCORE, SUBCORE,
+PROJECTID, PROLEAD,PROHEAD,PROTEAM,PROUSER,IMPDATE,DUEDATE,BRNPROJ)
+values('25','DGL-TCS','25','59003','15-FEB-17','59003','15-FEB-17','N',' 22812','17-sep-17 ','4',' ',' 19-sep-2017',' 121',' 4',' 4','1 ',' 22836',' 20168','steam ','test','15-FEB-17 ','15-FEB-17 ','B');
+
+
+
+
+insert into  APPROVAL_SALARY (APRYEAR, APRNUMB, POLSUBJ, EFFDATE, POLTYPE, VALUPTO, CRENAME, APPDATE, COONAME, USELIST, ASISTBY, DESKPRO, POLIDOC, FILEPOL)
+ values
+ ('2018-19', ' /  4001000 / 07-09-2018 / 1000 / 11:31 AM', '1', '07-Sep-2018', 'ORIGINAL', '27-Sep-2018', '1091', '07-Sep-2018', '1066', '1094', '1084', '0', 'approval policy', '2018-19_15_.txt')
+
+
+
+insert into av7_ro_det(BRNCODE,RO_YEAR,RO_NUMB,RO_SRNO,FR_TIME,TO_TIME,RO_DATE,RO_FCT,RO_DURA,COSTPSE,RATEPSE,TOTAMNT)
+values('118','2017-18','724','1','07:00:00','11:00:00','23-APR-17','25','15','625','937.5','23437.5');
+
+
+
+insert into av7_ro_summ(BRNCODE,RO_YEAR, RO_NUMB, RO_MODE, PUBNAME, CAMPDES, CAMPFDT,CAMPTDT,SPONSTA,POSITON,PAGEHGT,PAGEWID,SQPRATE,GROSAMT,DISCPER, DISCAMT, NETTAMT, ADDUSER, EDTUSER, EDTDATE, DELETED, DELUSER, DELDATE)         
+values('118','2016-17','19302','N','DINAMALAR - TRICHY','TCS PONGAL-2017 CAMPAIGN AD','18-MAR-17',' ','TRICHY','FRONT HALF PAGE','1','1','231000','231000','0','0','231000','5078888','18-MAR-17',' ',' ','N',' ',' ');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ 
+     

@@ -1,0 +1,1084 @@
+<?php
+error_reporting(0);
+include_once('../lib/config.php');
+include_once('../lib/function_connect.php');
+include_once('../general_functions.php');
+extract($_REQUEST);
+$current_year = select_query_json("Select Poryear From Codeinc", "Centra", 'TCS'); // Get the Current Year
+
+if($_SESSION['tcs_user'] == '') { ?>
+	<script>window.location='../index.php';</script>
+<?php exit();
+}
+
+$sql_dynamic_option = select_query_json("select * from approval_npo_applist where apmcode = ".$slt_approval_listings."", "Centra", 'TEST'); ?>
+<div class='clear clear_both'></div>
+<div style="border-top: 1px solid #d4d4d4; width: 100%; padding: 0% 2%; height: 5px;"></div>
+<?
+if($_REQUEST['slt_submission'] != 8 && $_REQUEST['slt_submission'] != 4 && $_REQUEST['slt_submission'] != 2  && $_REQUEST['slt_submission'] != 3){$pathid = 1;}
+if(count($sql_dynamic_option) > 0) { $pathid = $sql_dynamic_option[0]['PATHID']; }
+if($slt_approval_listings == 786 or $slt_approval_listings == 408 or $slt_approval_listings == 143 or $slt_approval_listings==97 or $slt_approval_listings==105 ){
+	$pathid = 2;
+}
+
+
+if(($_REQUEST['slt_submission'] != 4 && $_REQUEST['slt_submission'] != 2  && $_REQUEST['slt_submission'] != 3) or ($pathid != "")){
+	if($pathid != "99"){
+		$budgetValue = select_query_json("select APPRVAL from approval_budget_planner_temp where APRNUMB like '%ADMIN / INFO TECH 4008108 / 08-03-2018 / 8108 / 03:37 PM%' and APPYEAR='2018' and APPMNTH='4'","Centra", 'TEST');
+?>
+<div style="text-align: center; line-height: 25px; background-color: #666666; color: #FFFFFF; width: 100%; font-weight: bold; text-transform: uppercase;">Break Up for Approval Listing<span class="blink_me" id="budgt_vlu"> -
+ Budget Value - <?php echo $budgetValue[0]['APPRVAL'];?> </span><input type="hidden" name="ttl_lock" id="ttl_lock" value="<?php echo $budgetValue[0]['APPRVAL']; ?>" />  <input type="button" name="prddet" id="prddet" value="View Product" onclick="get_prddet();" class="btn-info"> </div>
+<?}}?>
+<div class='clear clear_both'></div>
+<input type="hidden" name="txtrequest_value" id="txtrequest_value" value="<?php echo $budgetValue[0]['APPRVAL']; ?>"/>
+<input type="hidden" name="txt_brnvalue_0" id="txt_brnvalue_0" value="<?php echo $budgetValue[0]['APPRVAL']; ?>"/>
+<input type="hidden" name="hidrequest_value" id="hidrequest_value" value="<?php echo $budgetValue[0]['APPRVAL']; ?>"/>
+<?  
+if($sql_reqid[0]['EXPSRNO'] != '') {
+	$sql_rptmode = select_query_json("select RPTMODE from department_asset where EXPSRNO = '".$sql_reqid[0]['EXPSRNO']."'", "Centra", 'TCS');
+} else {
+	$sql_rptmode = select_query_json("select RPTMODE from department_asset where EXPSRNO = '13'", "Centra", 'TCS');
+} 
+?>
+<input type='hidden' name='txt_rptmode' id='txt_rptmode' value='<?=$sql_rptmode[0]['RPTMODE']?>'>
+
+<?
+switch ($pathid) {
+	case 1: // PO Based - Start ?>
+		<!-- Supplier Quotation / Po Based -->
+		<div id='' style="margin: 1px 5px 1px 0px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight" style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="call_product_innergrid(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="call_product_innergrid_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-3 colheight" style="padding: 0px;">Product / Sub Product / Spec.</div>
+					<?php if($expensehead==8){  ?>
+		            <div class="col-sm-3 colheight" style="padding: 0px;">Advt. Product Details</div>
+					<?php } ?>
+		            <div class="col-sm-1 colheight" style="padding: 0px;">Qty</div>
+		            <div class="col-sm-1 colheight" style="padding: 0px;">Rate</div>
+		            <div class="col-sm-1 colheight" style="padding: 0px;">Tax</div>
+		            <div class="col-sm-1 colheight" style="padding: 0px;">Discount %</div>
+		            <div class="col-sm-1 colheight" style="padding: 0px;">Total Amount</div>
+				</div>
+
+				<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-3 colheight" style="padding: 1px 0px;">	
+						<div style="width: 49%; float: left;">
+							<input type="text" name="txt_prdcode[]" id="txt_prdcode_1" required="required" maxlength="100" placeholder="Product" title="Product" class="form-control supquot find_prdcode" data-toggle="tooltip" onKeyPress="enable_product();" data-placement="top" onBlur="validate_prdempty(1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="width: 49%; float: left;margin-left: 2px;">
+							<input type="text" name="txt_subprdcode[]" id="txt_subprdcode_1" maxlength="100" placeholder="Sub Product" data-toggle="tooltip" data-placement="top" title="Sub Product" class="form-control supquot find_subprdcode" onKeyPress="enable_product();" onBlur="validate_subprdempty(1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+
+							<input type="hidden" readonly="readonly" name="txt_unitname[]" id="txt_unitname_1" required="required" maxlength="3" placeholder="Unit" data-toggle="tooltip" data-placement="top" title="Unit" onKeyPress="enable_product();" class="form-control supquot" style=" text-transform: uppercase;height: 25px;" >
+		    				<input type="hidden" onKeyPress="enable_product(); return isNumber(event)" name="txt_unitcode[]" id="txt_unitcode_1" required="required" maxlength="3" placeholder="Unit Code" data-toggle="tooltip" data-placement="top" title="Unit Code" class="form-control supquot" style=" text-transform: uppercase;height: 25px;" >
+						</div>
+						<div style="clear: both; height: 1px;"></div>
+
+						<div>
+							<input type="text" name="txt_prdspec[]" id="txt_prdspec_1" required="required" maxlength="100" placeholder="Product Specification" data-toggle="tooltip" data-placement="top" title="Product Specification" onKeyPress="enable_product();" class="form-control supquot find_prdspec" onBlur="validate_prdspcempty(1)" style=" text-transform: uppercase; padding: 2px;height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+		            </div>
+					<?php if($expensehead==8){?>
+		            <div class="col-sm-3 colheight" style="padding: 1px 0px;">
+					
+						
+		            	<div style="width: 49%; float: left;">
+		    				<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_ad_duration[]" id="txt_ad_duration_1" onblur="calculateqtyamount('1')" maxlength="3" placeholder="Ad. Duration" data-toggle="tooltip" data-placement="top" title="Ad. Duration" class="form-control supquot ad_category" style=" text-transform: uppercase;height: 25px;" >
+		    			</div>
+						<div style="width: 49%; float: left; margin-left: 2px;">
+							<input type="text" name="txt_print_location[]" id="txt_print_location_1" maxlength="25" placeholder="Ad. Print Location" data-toggle="tooltip" data-placement="top" title="Ad. Print Location" onKeyPress="enable_product();" class="form-control supquot ad_category"  style=" text-transform: uppercase;height: 25px;" >
+						</div>
+						<div style="clear: both;"></div>
+
+						<div style="width: 49%; float: left;">
+		    				<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_size_length[]" id="txt_size_length_1" onblur="calculateqtyamount('1')" maxlength="7" placeholder="Size Length" data-toggle="tooltip" data-placement="top" title="Size Length" class="form-control supquot ad_category"  style=" text-transform: uppercase;height: 25px;" >
+		    			</div>
+						<div style="width: 49%; float: left; margin-left: 2px;">
+		    				<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_size_width[]" id="txt_size_width_1" onblur="calculateqtyamount('1')" maxlength="7" placeholder="Size width" data-toggle="tooltip" data-placement="top" title="Size width" class="form-control supquot ad_category" style=" text-transform: uppercase;height: 25px;" >
+		    			</div>
+		    			<div style="clear: both;"></div>
+
+		    			<input type="hidden"  name="slt_usage_section[]" id="slt_usage_section_1" required="required" maxlength="3" placeholder="Usage Section" data-toggle="tooltip" data-placement="top" title="Usage Section" onKeyPress="enable_product();" class="form-control supquot custom-select chosn" style=" text-transform: uppercase;" >
+		    			<? /* <select class="form-control supquot custom-select chosn" onKeyPress="enable_product();" required name='slt_usage_section[]' id='slt_usage_section_1' data-toggle="tooltip" data-placement="top" title="Usage Section" style="text-align: left !important;">
+						<? 	$sql_project = select_query_json("select * from empsection where DELETED = 'N' order by ESENAME Asc");
+							for($project_i = 0; $project_i < count($sql_project); $project_i++) { ?>
+								<option style="text-align: left !important;" value="<?=$sql_project[$project_i]['ESECODE']?>"><?=$sql_project[$project_i]['ESENAME']?></option>
+						<? } ?>
+						</select> */ ?>
+		    		</div>
+					<?php }	 ?>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px;">	
+		    			<input type="text" onKeyPress="enable_product(); return numwodot(event)" name="txt_prdqty[]" id="txt_prdqty_1" onblur="calculateqtyamount('1')" required="required" maxlength="6" placeholder="Qty" data-toggle="tooltip" data-placement="top" title="Qty" class="form-control supquot" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+
+		            <div class="col-sm-1 colheight red_clrhighlight" style="padding: 1px 0px; text-align: center; padding-left: 2px;" id="id_sltrate_1">	
+		    			 -
+		    		</div>
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: left; padding-left: 2px;">
+		    			<div style="float: left; width: 50%; text-align: right;">SGST : </div><div style="float: left; width: 50%;" id="id_sltsgst_1"> - </div>
+						<div style="clear: both;"></div>
+		    			<div style="float: left; width: 50%; text-align: right;">CGST : </div><div style="float: left; width: 50%;" id="id_sltcgst_1"> - </div>
+						<div style="clear: both;"></div>
+		    			<div style="float: left; width: 50%; text-align: right;">&nbsp;&nbsp;IGST : </div><div style="float: left; width: 50%;" id="id_sltigst_1"> - </div>
+						<div style="clear: both;"></div>
+		    		</div>
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: left; padding-left: 2px;">
+		    			<!-- <div style="float: left; width: 50%; text-align: right;">SPL.DIS. : </div><div style="float: left; width: 50%;" id="id_sltslds_1"> - </div>
+						<div style="clear: both;"></div>
+		    			<div style="float: left; width: 50%; text-align: right;">PCELES. : </div><div style="float: left; width: 50%;" id="id_sltpcls_1"> - </div> -->
+						<div style="clear: both;"></div>
+		    			<div style="float: left; width: 50%; text-align: right;">&nbsp;&nbsp;DISC.% : </div><div style="float: left; width: 50%;" id="id_sltdisc_1"> - </div>
+						<div style="clear: both;"></div>
+		    		</div>
+		            <div class="col-sm-1 colheight red_clrhighlight" style="padding: 1px 0px; text-align: center; padding-left: 2px;" id="id_sltamnt_1">
+		    			 - 
+		    		</div>
+				</div>
+
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight" style="background-color: #FFFFFF; border: 1px solid #FFFFFF !important; padding: 0px; border-top-left-radius:5px;"></div>
+					<!-- Quotation -->
+					<div class="col-sm-10 colheight" style="padding: 0px; border-top-left-radius:5px;">
+		    			<div class="fair_border" style="padding-left: 0px;">
+							<div class="row" style="margin-right: -10px; background-color: #666666; color:#FFFFFF; display: flex; font-weight: bold;">
+								<div class="col-sm-1 colheight" style="padding: 0px;">#</div>
+								<div class="col-sm-3 colheight" style="padding: 0px;">Supplier Details</div>
+								<div class="col-sm-1 colheight" style="padding: 0px;">Delivery Duration</div>
+					            <div class="col-sm-1 colheight" style="padding: 0px;">Per Piece Rate / Adv. Amount</div>
+					            <div class="col-sm-1 colheight" style="padding: 0px;">Tax Val.</div>
+					            <div class="col-sm-1 colheight" style="padding: 0px;">Discount % </div>
+					            <div class="col-sm-1 colheight" style="padding: 0px;">Total Amount</div>
+					    		<div class="col-sm-1 colheight" style="padding: 0px;">Quotation PDF</div>
+					    		<div class="col-sm-2 colheight" style="padding: 0px;">Remarks</div>
+								<? /*<div class="col-sm-1 colheight" style="padding: 0px;">&nbsp;</div> */ ?>
+							</div> 
+						</div>
+						<!-- Quotation -->
+					</div>
+					<div class="col-sm-1 colheight" style="padding: 0px; border: 1px solid #FFFFFF !important; background-color: #FFFFFF; border-top-left-radius:5px;"></div>
+				</div> 
+
+				<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="background-color: #FFFFFF; border: 1px solid #FFFFFF !important; padding: 1px 0px;"></div>
+		    		<div class="col-sm-10 colheight" style="padding-left: 0px;">
+		    			<!-- Quotation -->
+		    			<div class="parts3_1 fair_border">
+							<div class="row" style="margin-right: -10px; display: flex;">
+								<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+									<div class="fg-line">
+										<input type="hidden" name="partint3_1" id="partint3_1" value="1"><input type="hidden" name="txt_prdsgst_per[1][]" id="txt_prdsgst_per_1_1" value=""><input type="hidden" name="txt_prdcgst_per[1][]" id="txt_prdcgst_per_1_1" value=""><input type="hidden" name="txt_prdigst_per[1][]" id="txt_prdigst_per_1_1" value="">
+										<button class="btn btn-success btn-add3" id="addbtn_1" type="button" title="Add Suppliers" style="padding: 2px 5px; margin-right: 0px !important;" onclick="call_innergrid(1)"><span class="glyphicon glyphicon-plus"></span></button>
+										<button id="removebtn_1" class="btn btn-remove btn-danger" type="button" title="Delete Suppliers" style="padding: 2px 5px; margin-right: 0px !important;" onclick="call_innergrid_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;<input type="radio" onKeyPress="enable_product();" onclick="getrequestvalue(1, 1)" checked="checked" name="txt_sltsupplier[1][]" id='txt_sltsupplier_1_1' value='1' data-toggle="tooltip" data-placement="top" title="Select This Supplier" placeholder="Select This Supplier" class="calc">&nbsp;1
+									</div>
+								</div>
+
+								<div class="col-sm-3 colheight" style="padding: 1px 0px;">	
+									<input type="text" name="txt_sltsupcode[1][]" id="txt_sltsupcode_1_1" required="required" maxlength="100" placeholder="Supplier" data-toggle="tooltip" data-placement="top" onKeyPress="enable_product();" title="Supplier" class="form-control supquot find_supcode" onBlur="validate_supprdempty(1, 1)" style=" text-transform: uppercase;height: 25px;">
+									<input type="hidden" name="state[1][]" id="state1_1" value="">
+								</div>
+
+								<div class="col-sm-1 colheight" style="padding: 1px 0px;">	
+									<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_delivery_duration[1][]" id="txt_delivery_duration_1_1" required="required" maxlength="4" placeholder="Delivery Duration / Period" data-toggle="tooltip" data-placement="top" title="Delivery Duration / Period" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+								</div>
+
+					            <div class="col-sm-1 colheight" style="padding: 1px 0px;">
+					            	<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_prdrate[1][]" id="txt_prdrate_1_1" placeholder="Product Per Piece Rate" required="required" maxlength="10" data-toggle="tooltip" data-placement="top" onblur="calculatenetamount('1','1')" title="Product Per Piece Rate" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">Adv.Amount Val.:
+									<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_advance_amount[1][]" id="txt_advance_amount_1_1" required="required" maxlength="10" placeholder="Advance Amount Value" data-toggle="tooltip" data-placement="top" title="Advance Amount Value" class="form-control supquot" style=" text-transform: uppercase;height: 25px;"> 
+					            </div>
+
+					            <div class="col-sm-1 colheight" style="padding: 1px 0px;">	
+					    			<input type="text" onKeyPress="enable_product(); return isNumber(event)" readonly name="txt_prdsgst[1][]" id="txt_prdsgst_1_1" required="required" maxlength="10" placeholder="SGST Value" data-toggle="tooltip" data-placement="top" title="SGST Value" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    			<input type="text" onKeyPress="enable_product(); return isNumber(event)" readonly name="txt_prdcgst[1][]" id="txt_prdcgst_1_1" required="required" maxlength="10" placeholder="CGST Value" data-toggle="tooltip" data-placement="top" title="CGST Value" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    			<input type="text" onKeyPress="enable_product(); return isNumber(event)" readonly name="txt_prdigst[1][]" id="txt_prdigst_1_1" required="required" maxlength="10" placeholder="IGST Value" data-toggle="tooltip" data-placement="top" title="IGST Value" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    		</div>
+
+
+					            <div class="col-sm-1 colheight" style="padding: 1px 0px;">	
+					    			<input type="hidden" onKeyPress="enable_product(); return isNumber(event)" name="txt_spldisc[1][]" id="txt_spldisc_1_1" required="required" maxlength="5" placeholder="Spl. Discount Value" data-toggle="tooltip" data-placement="top" title="Spl. Discount Value" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    			<input type="hidden" onKeyPress="enable_product(); return isNumber(event)" name="txt_pieceless[1][]" id="txt_pieceless_1_1" required="required" maxlength="5" placeholder="Piece Less Value" data-toggle="tooltip" data-placement="top" title="Piece Less Value" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    			<input type="text" onKeyPress="enable_product(); return isNumber(event)" name="txt_prddisc[1][]" id="txt_prddisc_1_1" required="required" maxlength="10" placeholder="Discount %" data-toggle="tooltip" data-placement="top" title="Discount %" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    			<input type="hidden" onKeyPress="enable_product(); return isNumber(event)" name="hid_prdnetamount[1][]" id="hid_prdnetamount_1_1" required="required" maxlength="12" placeholder="Net Amount" data-toggle="tooltip" data-placement="top" title="Net Amount Value" class="form-control supquot" style=" text-transform: uppercase;height: 25px;">
+					    		</div>
+
+					            <div class="col-sm-1 colheight" style="padding: 1px 0px;" id="id_prdnetamount_1_1">0</div>
+
+					    		<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+									<input type="file" onKeyPress="enable_product();" name="fle_supquot[1][]" id="fle_supquot_1_1" data-toggle="tooltip" onchange="ValidateSingleInput(this);" accept=".pdf" class="form-control supquot fileselect" data-placement="left" data-toggle="tooltip" data-placement="top" title="Upload Supplier Quotation PDF Document" placeholder="Supplier Quotation" style="height: 25px;"><span style="color:#FF0000; font-size:8px;">NOTE : MANDATORY FIELD WITH ALLOWED ONLY 1 PDF</span>
+								</div>
+
+					            <div class="col-sm-2 colheight" style="padding: 1px 0px;">
+					            	<textarea onKeyPress="enable_product();" name="txt_suprmrk[1][]" id="txt_suprmrk_1_1" required="required" maxlength="100" placeholder="Supplier description / Warranty Period / Selected Reason" data-toggle="tooltip" data-placement="top" title="Supplier description / Warranty Period / Selected Reason" onblur="calculatenetamount('1','1')" class="form-control supquot" style=" text-transform: uppercase; height: 75px; width: 100%;"></textarea>
+					            </div>
+							</div> 
+						</div>
+		    			<!-- Quotation -->
+
+					</div>
+					<div class="col-sm-1 colheight" style=" border: 1px solid #FFFFFF !important; padding: 1px 0px;"></div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+		<!-- Supplier Quotation / Po Based -->
+<? 	// PO Based - End
+	break;
+
+	case 2: // Monthwise Budget - Start ?>
+
+		<? 	if($view == 1) { ?>
+		<div style="padding: 5px; margin: 5px; border: 1px solid #a0a0a0; background-color: #effff2; border-radius: 5px;">
+		<!-- Supplier Name -->
+		<div class="form-group trbg">
+			<div class="col-lg-3 col-xs-3">
+				<label style='height:27px;'>Supplier Name <span style='color:red'>*</span></label>
+			</div>
+			<div class="col-lg-9 col-xs-9">
+				<?	if($_REQUEST['action'] == 'view') {
+						echo ": ".$sql_reqid[0]['SUPCODE']." - ".$sql_reqid[0]['SUPNAME'];
+				    } else { ?>
+						<input type='text' class="form-control" tabindex='11' maxlength="100" name='txt_suppliercode' id='txt_suppliercode' data-toggle="tooltip" data-placement="top" title="Supplier Name" placeholder="Supplier Name" style="text-transform: uppercase;" value='<? if($sql_reqid[0]['SUPCODE'] != '') { echo $sql_reqid[0]['SUPCODE']." - "; } echo $sql_reqid[0]['SUPNAME']; ?>'>
+				<?  } ?>
+			</div>
+		</div>
+		<div class='clear clear_both' style='padding-top:10px;'></div>
+		<!-- Supplier Name -->
+
+		<!-- Supplier Contact No -->
+		<div class="form-group trbg">
+			<div class="col-lg-3 col-xs-3">
+				<label style='height:27px;'>Supplier Contact No <span style='color:red'>*</span></label>
+			</div>
+			<div class="col-lg-9 col-xs-9">
+				<?	if($_REQUEST['action'] == 'view') {
+						echo ": ".$sql_reqid[0]['SUPCONT'];
+				    } else { ?>
+						<input type='text' class="form-control" tabindex='11' maxlength="25" name='txt_supplier_contactno' id='txt_supplier_contactno' onkeypress='return isNumber(event)' data-toggle="tooltip" data-placement="top" title="Supplier Contact No" placeholder="Supplier Contact No" style="text-transform: uppercase;" value='<?=$sql_reqid[0]['SUPCONT']?>'>
+				<?  } ?>
+			</div>
+		</div>
+		<div class='clear clear_both'><span style='color:#FF0000; font-size:10px;'><? /* NOTE : IF THIS IS QUOTATION BASED APPROVAL MEANS MUST FILL OUT THE SELECTED SUPPLIER DETAILS HERE.. */ ?>NOTE : MUST FILL OUT THE SELECTED SUPPLIER DETAILS HERE..</span></div>
+		<div class='clear clear_both' style='padding-top:10px;'></div>
+		<!-- Supplier Contact No -->
+		</div>
+		<div class='clear clear_both' style='padding-top:10px;'></div>
+
+		<div class="col-lg-3 col-xs-3">Budget Planner &#8377;</div>
+		<div class="col-lg-9 col-xs-9"> : 
+			<div id='id_budplanner'></div>
+			<div>
+				<table style='clear:both; float:left; width:100%;'>
+				<tr><td>
+					<table style='width:100%;'> <? /* class="monthyr_wrap" */ ?>
+					<? 
+						$brnc = $slt_branch;
+						$depc = $deptid;
+						$core_dep = $core_deptid;
+						$tarno = $target_no;
+						$ttl_lock = 0;
+
+						// $frdt = $sql_tarno[0]['PTFDATE'];
+						// $todt = $sql_tarno[0]['PTTDATE'];
+
+						// $frdt = "01-MAY-17";
+						$frdt = date("01-M-y");
+						$todt = "31-MAR-18";
+						// $nxtyr = "2017-18";
+						$nxtyr = $current_year[0]['PORYEAR'];
+
+						$minvl = date('m/Y', strtotime($frdt));
+						$maxvl = date('m/Y', strtotime($todt));
+						$minvl1 = date('m,Y', strtotime($frdt));
+						$maxvl1 = date('m,Y', strtotime($todt));
+
+						$budyr = date('Y', strtotime($frdt));
+						$budmn = date('m', strtotime($frdt));
+
+						$prev_month_ts = strtotime(date('01-m-Y').' -1 month');
+
+						$sql_paymntyr = select_query_json("select * from auto_update_process where AUPCODE = 34", "Centra", 'TCS');
+						if($slt_approval_listings == 807 or $slt_approval_listings == 777) {
+							$crnyr = $sql_paymntyr[0]['PAYYEAR'];
+							$crnmn = $sql_paymntyr[0]['PAYMONT'];
+							// $minvl = date('m/Y', strtotime('01-'.$sql_paymntyr[0]['PAYMONT'].'-'.$sql_paymntyr[0]['PAYYEAR']));
+							// $maxvl = date('m/Y', strtotime('31-'.$sql_paymntyr[0]['PAYMONT'].'-'.$sql_paymntyr[0]['PAYYEAR']));
+						} else {
+							$crnyr = date('Y', $prev_month_ts);
+							$crnmn = date('m', $prev_month_ts);
+						}
+
+						/* $minvl = '4/2017';
+						$maxvl = '3/2018'; */
+						$fdt = explode("/", $minvl);
+						$tdt = explode("/", $maxvl);
+						// echo "**".$fdt[0]."**".$fdt[1]."**";
+						$ivl = 0; $ii = ''; $fstmnth = ''; $lstmnth = '';
+						$can_edit = 1; $add_month = '';
+						if($slt_approval_listings == '807' || $slt_approval_listings == '777') { // 807 - STAFF MONTHLY SALARY & 777 - BANK SALARY CREDIT
+							if($slt_approval_listings == '807') { // 807 - STAFF MONTHLY SALARY
+								$notin = " and status not in ('C') ";
+							} elseif($slt_approval_listings == '777') { // 777 - BANK SALARY CREDIT
+								$notin = " and status not in ('B') ";
+							}
+
+							$sql_mntsal = select_query_json("select * from attn_monthly_salary_detail 
+																where brncode = ".$brnc." and payyear = ".$crnyr." and paymont = ".$crnmn." 
+																	and status in ('N', 'C', 'B') ".$notin."", "Centra", 'TCS');
+
+							/* echo ("select * from attn_monthly_salary_detail 
+																where brncode = ".$brnc." and payyear = ".$crnyr." and paymont = ".$crnmn." 
+																	and status in ('N', 'C', 'B') ".$notin.""); */
+							if(count($sql_mntsal) > 0) {
+								$add_month = $sql_mntsal[0]['PAYMONT'].", ".$sql_mntsal[0]['PAYYEAR'];
+								$can_edit = 0;
+							} else {
+								$can_edit = 1;
+							}
+							$add_month_name = findmonth($sql_mntsal[0]['PAYMONT']).", ".$sql_mntsal[0]['PAYYEAR'];
+							if($slt_approval_listings == '807') { // 807 - STAFF MONTHLY SALARY
+								$bank_cash = $sql_mntsal[0]['CASHPART'];
+							} elseif($slt_approval_listings == '777') { // 777 - BANK SALARY CREDIT
+								$bank_cash = $sql_mntsal[0]['BANKPART'];
+							}
+						}
+
+						$sql_tarno = select_query_json("select * from budget_planner_yearly 
+															where DEPCODE=".$depc." and BRNCODE=".$brnc." and BUDYEAR = '".$nxtyr."' and TARNUMB = ".$tarno." and EXPSRNO = ".$core_dep."", "Centra", 'TCS');
+						if(count($sql_tarno) > 0) { ?>
+							<div>
+							<table style='clear:both; float:left; width:90%;'>
+							<tr><td><table class="monthyr_wrap" style='width:100%;'>
+							<? 
+							$sql_extr = select_query_json("select sum(nvl(APPRVAL, 0)) aprvlu from approval_budget_planner_temp 
+																	where BRNCODE=".$brnc." and APRYEAR = '".$nxtyr."' and EXPSRNO = ".$core_dep." and deleted = 'N' and USEDVAL = '".$slt_submission."'", "Centra", 'TCS'); //  ATYCODE = USEDVAL
+							if(count($sql_extr) > 0) { 
+								$sql_yrlyttl = select_query_json("select sum(distinct nvl(sm.BUDVALUE, 0)) BUDVALUE, (sum(distinct nvl(sm.APPVALUE, 0)) + sum(distinct nvl(tm.APPRVAL, 0))) APPVALUE, 
+																			(sum(distinct nvl(sm.BUDVALUE, 0)) - sum(distinct nvl(sm.APPVALUE, 0)) - sum(distinct nvl(tm.APPRVAL, 0))) pendingvalue
+																		from budget_planner_head_sum sm, approval_budget_planner_temp tm 
+																		where sm.BUDYEAR=tm.APRYEAR AND sm.BRNCODE=tm.BRNCODE AND sm.EXPSRNO=tm.EXPSRNO and tm.deleted = 'N' and sm.BRNCODE=".$brnc." and 
+																			sm.BUDYEAR = '".$nxtyr."' and sm.EXPSRNO = ".$core_dep." and USEDVAL = '".$slt_submission."'", "Centra", 'TCS'); //  ATYCODE = USEDVAL
+							} else { 
+								$sql_yrlyttl = select_query_json("select sum(nvl(BUDVALUE, 0)) BUDVALUE, sum(nvl(APPVALUE, 0)) APPVALUE, (sum(nvl(BUDVALUE, 0)) - sum(nvl(APPVALUE, 0))) pendingvalue
+																		from budget_planner_head_sum where BRNCODE=".$brnc." and BUDYEAR = '".$nxtyr."' and EXPSRNO = ".$core_dep."", "Centra", 'TCS'); 
+							}
+
+							if($slt_submission == 7) {
+								$ttl_lock = 10000000000000;
+							} else {
+								if($sql_yrlyttl[0]['PENDINGVALUE'] == '' or $sql_yrlyttl[0]['PENDINGVALUE'] <= 0) {
+									$ttl_lock = 0; 
+								} else {
+									$ttl_lock = $sql_yrlyttl[0]['PENDINGVALUE']; 
+								}
+							}
+							// $ttl_lock = 1;
+
+							if($slt_submission != 7) { ?>
+								<tr>
+									<td colspan="3" style='text-align: center; font-weight:bold;'>
+										Budget Value : <? if($sql_yrlyttl[0]['PENDINGVALUE'] == '' or $sql_yrlyttl[0]['PENDINGVALUE'] <= 0) { echo "0"; } else { echo moneyFormatIndia($sql_yrlyttl[0]['PENDINGVALUE']); } ?>
+									</td>
+								</tr>
+							<? }
+
+							if($action != 'show_budgetvalue') { 
+								if($add_month != '') { ?>
+									<tr>
+										<td style='text-align:right; width:25%;'><input type='hidden' name='mnt_yr[]' id='mnt_yr_<?=$sql_mntsal[0]['PAYMONT']?>' class='form-control' value='<?=$sql_mntsal[0]['PAYMONT']?>,<?=$fdt[1]?>'><span><?=$add_month_name?></span> : </td>
+										<td style='width:5%;'></td>
+										<td style='width:40%;'><input type='text' tabindex='11' readonly="readonly" required name='mnt_yr_amt[]' id='mnt_yr_amt_<?=$sql_mntsal[0]['PAYMONT']?>' class='form-control ttlsum ttlsumrequired' value="<?=$bank_cash?>" onkeypress='enable_month(); return isNumber(event)' onKeyup='calculate_sum()' onblur="calculate_sum(); allow_zero(<?=$sql_mntsal[0]['PAYMONT']?>, this.value, '<?=$bank_cash?>');" maxlength='10' style='margin: 2px 0px;'></td>
+										<td style='width:30%; text-align:center; font-weight:bold;'><input type='hidden' id='ttl_lock_<?=$sql_mntsal[0]['PAYMONT']?>' name='ttl_locks[]' value='<? echo $bank_cash; ?>'></td>
+									</tr>
+							<? 	}
+
+							if($fdt[1] == $tdt[1]) {
+								for($i = $fdt[0]; $i <= $tdt[0]; $i++) { $ivl++;
+									if($i < 10 && strlen($i) == 2) {
+										$i = ltrim($i, '0');
+									}
+									$ii = findmonth($i);
+									if($ivl == 1) {
+										$fstmnth = $i.",".$fdt[1];
+									}
+
+									$sql_yrly = select_query_json("select * from budget_planner_yearly 
+																			where DEPCODE=".$depc." and BRNCODE=".$brnc." and BUDYEAR = '".$nxtyr."' and BUDMONTH in (".$i.") and TARNUMB = ".$tarno." and EXPSRNO = ".$core_dep." 
+																			order by BUDYEAR, BUDMONTH, TARNUMB, BRNCODE, DEPCODE", "Centra", 'TCS');
+
+									$sql_yr = select_query_json("select * from budget_planner_branch where taryear+1=".substr($fdt[1], 2)." and tarmont=".$i." and tarnumb=".$target_no." and BRNCODE = ".$slt_branch." and DEPCODE = ".$deptid."", "Centra", 'TCS'); 
+									if(count($sql_yr) == 0) { 
+										// Insert budget_planner_branch
+										$tbl_docs = "budget_planner_branch";
+										$field_docs['BRNCODE'] = $slt_branch;
+										$field_docs['TARYEAR'] = substr(($fdt[1] - 1), 2);
+										$field_docs['TARMONT'] = $i;
+										$field_docs['DEPCODE'] = $deptid;
+										$field_docs['TARVALU'] = '0';
+										$field_docs['TARNUMB'] = $target_no;
+										$field_docs['PURTVAL'] = '0';
+										$field_docs['RESRVAL'] = '0';
+										$field_docs['EXTRVAL'] = '0';
+										$field_docs['TOTBVAL'] = '0';
+										$field_docs['DEDVAL']  = '0';
+										$insert_docs = insert_query($field_docs, $tbl_docs);
+										// print_r($field_docs);
+										// Insert budget_planner_branch
+									} 
+
+									// echo $i.",".$fdt[1]."**".$sql_mntsal[0]['PAYMONT'].",".$fdt[1];
+									if($i.",".$fdt[1] != $sql_mntsal[0]['PAYMONT'].",".$fdt[1]) { ?>
+										<tr>
+											<td style='text-align:right; width:25%;'><input type='hidden' name='mnt_yr[]' id='mnt_yr_<?=$i?>' class='form-control' value='<?=$i?>,<?=$fdt[1]?>'><span><?=$ii?>, <?=$fdt[1]?></span> : </td>
+											<td style='width:5%;'></td>
+											<td style='width:40%;'><input type='text' tabindex='11' <? if($can_edit == 0) { ?> readonly="readonly" <? } ?> required name='mnt_yr_amt[]' id='mnt_yr_amt_<?=$i?>' class='form-control ttlsum ttlsumrequired' <? /* if($slt_submission == 6) { ?>value='<?=$sql_yrly[0]['BUDVALU']?>' readonly<? } else { */ ?>value="0"<? /* } */ ?> onkeypress='enable_month(); return isNumber(event)' onKeyup='calculate_sum()' onblur="calculate_sum(); allow_zero(<?=$i?>, this.value, '<?=$sql_yrly[0]['BUDVALU']?>');" maxlength='10' style='margin: 2px 0px;'></td>
+											<td style='width:30%; text-align:center; font-weight:bold;'><? /* <span id='id_remainingvalue_<?=$i?>'><?=moneyFormatIndia($sql_yrly[0]['BUDVALU'])?></span> */ ?><input type='hidden' id='ttl_lock_<?=$i?>' name='ttl_locks[]' value='<? if($sql_yrlyttl[0]['PENDINGVALUE'] == '' or $sql_yrlyttl[0]['PENDINGVALUE'] <= 0) { echo "0"; } else { echo $sql_yrlyttl[0]['PENDINGVALUE']; } ?>'></td>
+										</tr>
+									<?
+									}
+								}
+							} else { 
+								for($i = $fdt[0]; $i <= 12; $i++) { $ivl++;
+									if($i < 10 && strlen($i) == 2) {
+										$i = ltrim($i, '0');
+									}
+									$ii = findmonth($i);
+									if($ivl == 1) {
+										$fstmnth = $i+","+$fdt[1];
+									}
+									
+									$sql_yrly = select_query_json("select * from budget_planner_yearly 
+																			where DEPCODE=".$depc." and BRNCODE=".$brnc." and BUDYEAR = '".$nxtyr."' and BUDMONTH in (".$i.") and TARNUMB = ".$tarno." and EXPSRNO = ".$core_dep." 
+																			order by BUDYEAR, BUDMONTH, TARNUMB, BRNCODE, DEPCODE", "Centra", 'TCS');
+																			
+									$sql_yr = select_query_json("select * from budget_planner_branch 
+																		where taryear+1=".substr($fdt[1], 2)." and tarmont=".$i." and tarnumb=".$target_no." and BRNCODE = ".$slt_branch." and DEPCODE = ".$deptid."", "Centra", 'TCS'); 
+									if(count($sql_yr) == 0) { 
+										// Insert budget_planner_branch
+										$tbl_docs = "budget_planner_branch";
+										$field_docs['BRNCODE'] = $slt_branch;
+										$field_docs['TARYEAR'] = substr(($fdt[1] - 1), 2);
+										$field_docs['TARMONT'] = $i;
+										$field_docs['DEPCODE'] = $deptid;
+										$field_docs['TARVALU'] = '0';
+										$field_docs['TARNUMB'] = $target_no;
+										$field_docs['PURTVAL'] = '0';
+										$field_docs['RESRVAL'] = '0';
+										$field_docs['EXTRVAL'] = '0';
+										$field_docs['TOTBVAL'] = '0';
+										$field_docs['DEDVAL']  = '0';
+										$insert_docs = insert_query($field_docs, $tbl_docs);
+										// print_r($field_docs);
+										// Insert budget_planner_branch
+									} 
+
+									// echo $i.",".$fdt[1]."##".$sql_mntsal[0]['PAYMONT'].",".$fdt[1];
+									if($i.",".$fdt[1] != $sql_mntsal[0]['PAYMONT'].",".$fdt[1]) { ?>
+										<tr>
+											<td style='text-align:right; width:25%;'><input type='hidden' name='mnt_yr[]' id='mnt_yr_<?=$i?>' class='form-control' value='<?=$i?>,<?=$fdt[1]?>'><span><?=$ii?>, <?=$fdt[1]?></span> : </td>
+											<td style='width:5%;'></td>
+											<td style='width:40%;'><input type='text' tabindex='11' <? if($can_edit == 0) { ?> readonly="readonly" <? } ?> required name='mnt_yr_amt[]' id='mnt_yr_amt_<?=$i?>' class='form-control ttlsum ttlsumrequired' <? /* if($slt_submission == 6) { ?>value='<?=$sql_yrly[0]['BUDVALU']?>' readonly<? } else { */ ?>value="0"<? /* } */ ?> onkeypress='enable_month(); return isNumber(event)' onKeyup='calculate_sum()' onblur="calculate_sum(); allow_zero(<?=$i?>, this.value, '<?=$sql_yrly[0]['BUDVALU']?>');" maxlength='10' style='margin: 2px 0px;'></td>
+											<td style='width:30%; text-align:center; font-weight:bold;'><? /* <span id='id_remainingvalue_<?=$i?>'><?=moneyFormatIndia($sql_yrly[0]['BUDVALU'])?></span> */ ?><input type='hidden' id='ttl_lock_<?=$i?>' name='ttl_locks[]' value='<?=$sql_yrly[0]['BUDVALU']?>'></td>
+										</tr>
+									<?
+									}
+								}
+								$lstmnth = ($i-1)+","+$fdt[1];
+								
+								for($i = 1; $i <= $tdt[0]; $i++) { $ivl++;
+									if($i < 10 && strlen($i) == 2) {
+										$i = ltrim($i, '0');
+									}
+									$ii = findmonth($i);
+									if($ivl == 1) {
+										$fstmnth = $i+","+$tdt[1];
+									}
+
+									$sql_yrly = select_query_json("select * from budget_planner_yearly 
+																			where DEPCODE=".$depc." and BRNCODE=".$brnc." and BUDYEAR = '".$nxtyr."' and BUDMONTH in (".$i.") and TARNUMB = ".$tarno." and EXPSRNO = ".$core_dep." 
+																			order by BUDYEAR, BUDMONTH, TARNUMB, BRNCODE, DEPCODE", "Centra", 'TCS'); 
+									// $ttl_lock += $sql_yrly[0]['BUDVALU'];
+									$sql_yr = select_query_json("select * from budget_planner_branch where taryear+1=".substr($tdt[1], 2)." and tarmont=".$i." and tarnumb=".$target_no." and BRNCODE = ".$slt_branch." and DEPCODE = ".$deptid."", "Centra", 'TCS'); 
+									if(count($sql_yr) == 0) { 
+										// Insert budget_planner_branch
+										$tbl_docs = "budget_planner_branch";
+										$field_docs['BRNCODE'] = $slt_branch;
+										$field_docs['TARYEAR'] = substr(($tdt[1] - 1), 2);
+										$field_docs['TARMONT'] = $i;
+										$field_docs['DEPCODE'] = $deptid;
+										$field_docs['TARVALU'] = '0';
+										$field_docs['TARNUMB'] = $target_no;
+										$field_docs['PURTVAL'] = '0';
+										$field_docs['RESRVAL'] = '0';
+										$field_docs['EXTRVAL'] = '0';
+										$field_docs['TOTBVAL'] = '0';
+										$field_docs['DEDVAL']  = '0';
+										$insert_docs = insert_query($field_docs, $tbl_docs);
+										// print_r($field_docs);
+										// Insert budget_planner_branch
+									} 
+
+									// echo "<br>".$i.",".$fdt[1]."++".$sql_mntsal[0]['PAYMONT'].",".$fdt[1];
+									if($i.",".$fdt[1] != $sql_mntsal[0]['PAYMONT'].",".$fdt[1]) { ?>
+										<tr>
+											<td style='text-align:right; width:25%;'><input type='hidden' name='mnt_yr[]' id='mnt_yr_<?=$i?>' class='form-control' value='<?=$i?>,<?=$tdt[1]?>'><span><?=$ii?>, <?=$tdt[1]?></span> : </td>
+											<td style='width:5%;'></td>
+											<td style='width:40%;'><input type='text' tabindex='11' <? if($can_edit == 0) { ?> readonly="readonly" <? } ?> required name='mnt_yr_amt[]' id='mnt_yr_amt_<?=$i?>' class='form-control ttlsum ttlsumrequired' <? /* if($slt_submission == 6) { ?>value='<?=$sql_yrly[0]['BUDVALU']?>' readonly<? } else { */ ?>value="0"<? /* } */ ?> onkeypress='enable_month(); return isNumber(event)' onKeyup='calculate_sum()' onblur="calculate_sum(); allow_zero(<?=$i?>, this.value, '<?=$sql_yrly[0]['BUDVALU']?>');" maxlength='10' style='margin: 2px 0px;'></td>
+											<td style='width:30%; text-align:center; font-weight:bold;'><? /* <span id='id_remainingvalue_<?=$i?>'><?=moneyFormatIndia($sql_yrly[0]['BUDVALU'])?></span> */ ?><input type='hidden' id='ttl_lock_<?=$i?>' name='ttl_locks[]' value='<?=$sql_yrly[0]['BUDVALU']?>'></td>
+										</tr>
+									<?
+									}
+								}
+								$lstmnth = ($i-1)+","+$tdt[1];
+							} ?>
+							<tr><td colspan='2' style='width:40%; text-align:right; padding-right:10%; font-weight:bold;'>TOTAL : </td><td style='width:60%; font-weight:bold;'><span id='ttl_mntyr'><? /* if($slt_submission == 6) { echo $ttl_lock; } else { */ ?>0<? /* } */ ?></span></td></tr>
+							</table></td></tr>
+							</table>
+							</div>
+
+							<input type='hidden' id='frmdate' name='frmdate' value='<?=$minvl?>'>
+							<input type='hidden' id='todate' name='todate' value='<?=$maxvl?>'>
+							<input type='hidden' id='minvl' name='minvl' value='<?=$minvl?>'>
+							<input type='hidden' id='maxvl' name='maxvl' value='<?=$maxvl?>'>
+							<input type='hidden' id='fstmnth' name='fstmnth' value='<?=$fstmnth?>'>
+							<input type='hidden' id='lstmnth' name='lstmnth' value='<?=$lstmnth?>'>
+							<input type='hidden' id='hidapryear' name='hidapryear' value='<?=$nxtyr?>'>
+							<input type='hidden' id='ttl_lock' name='ttl_lock' value='<?=$ttl_lock?>'>
+							<input type='hidden' id='slry_status' name='slry_status' value='<?=$sql_mntsal[0]['STATUS']?>'>
+
+							<? } else { ?>
+								<input type='hidden' id='ttl_pndlock' name='ttl_pndlock' value='<?=$ttl_lock?>'>
+							<? }
+						} else {
+							// If budget_planner_yearly values are empty, must insert here
+							// Insert budget_planner_yearly
+							$tbl_docs = "budget_planner_yearly";
+							$field_docs['BUDYEAR'] 		= $nxtyr;
+							$field_docs['BUDMONTH']		= date('m');
+							$field_docs['BRNCODE'] 		= $brnc;
+							$field_docs['DEPCODE'] 		= $depc;
+							$field_docs['BUDVALU'] 		= '0';
+							$field_docs['SALVAL_APX'] 	= '0';
+							$field_docs['SALVAL_ACT'] 	= '0';
+							$field_docs['REQVALU'] 		= '0';
+							$field_docs['APPVALU'] 		= '0';
+							$field_docs['PORVALU'] 		= '0';
+							$field_docs['PAYVALU'] 		= '0';
+							$field_docs['TARNUMB'] 		= $tarno;
+							$field_docs['TARVALU'] 		= '0';
+							$field_docs['RESVALU'] 		= '0';
+							$field_docs['EXTVALU'] 		= '0';
+							$field_docs['BUDVALU_APPX'] = '0';
+							$field_docs['EXPSRNO'] 		= $core_dep;
+							$field_docs['EXP_BUDGET'] 	= '0';
+
+							$insert_docs = insert_query($field_docs, $tbl_docs);
+							// print_r($field_docs);
+							// Insert budget_planner_yearly
+							echo "1";
+						} 
+					?>
+					</table>
+				</td></tr>
+				</table>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		</div>
+		<div class='clear clear_both'>&nbsp;</div>
+		<? 	}
+			// Monthwise Budget - End
+			break;
+	case 11:
+			$nxtyr = $current_year[0]['PORYEAR'];
+			$sql_yrlyttl = select_query_json("select sum(nvl(BUDVALUE, 0)) BUDVALUE, sum(nvl(APPVALUE, 0)) APPVALUE, (sum(nvl(BUDVALUE, 0)) - sum(nvl(APPVALUE, 0))) pendingvalue
+				from budget_planner_head_sum where BRNCODE=".$slt_branch." and BUDYEAR = '".$nxtyr."' and EXPSRNO = ".$core_deptid."", "Centra", 'TCS'); 
+			$ttl_lock = $sql_yrlyttl[0]['PENDINGVALUE']; 
+	?>
+			<input type='hidden' id='ttl_lock' name='ttl_lock' value='<?=$ttl_lock?>'>
+			<div id='' style="padding-left: 10px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight"  style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_mrg_gift(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-2 colheight"  style="padding: 0px;">EMPLOYEE</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">PHOTO</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">EXP</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">DOJ</div>
+	            	<div class="col-sm-1 colheight"  style="padding: 0px;overflow-wrap: break-word;">BRANCH</div>
+	            	<div class="col-sm-1 colheight"  style="padding: 0px;overflow-wrap: break-word;">DEPARTMENT</div>
+            		<div class="col-sm-2 colheight"  style="padding: 0px;overflow-wrap: break-word;">DESIGNATION</div>
+            		<div class="col-sm-1 colheight"  style="padding: 0px;">OWN GIFT <br> GRAM </div>
+            		<div class="col-sm-1 colheight"  style="padding: 0px;">TRUST <br> AMOUNT</div>
+		        </div>
+		        
+		     	<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-2 colheight" style="padding: 1px 0px;">	
+						<div>
+							<input type="text" name="empname[]" id="txt_staffcode_1" required="required" maxlength="100" placeholder="Employee Code / Name" title="Employee Code / Name" class="form-control find_empcode" data-toggle="tooltip"   data-placement="top" onBlur="addempgift(1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div id="photo_1">
+							
+						</div>	
+						<input type="hidden" name="empsrno[]" id="empsrno_1" value="">
+					</div>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <input type="text"  name="CUREXP[]" id="curexp_1" placeholder="EXPERIENCE" data-toggle="tooltip" data-placement="top" title="EXPERIENCE" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <input type="text"  name="DATEOFJOIN[]" id="curdoj_1" placeholder="DOJ" data-toggle="tooltip" data-placement="top" title="DOJ" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <input type="text"  name="CURBRN[]" id="curbrn_1" placeholder="BRANCH" data-toggle="tooltip" data-placement="top" title="BRANCH" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <input type="text"  name="CURDEP[]" id="curdep_1" placeholder="DEPARTMENT" data-toggle="tooltip" data-placement="top" title="DEPARTMENT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-2 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <input type="text"  name="CURDES[]" id="curdes_1" placeholder="DESIGNATION" data-toggle="tooltip" data-placement="top" title="DESIGNATION" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <input type="text"  name="OWNGIFT[]" id="owngift_1" placeholder="GRAM" data-toggle="tooltip" data-placement="top" title="GIFT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <input type="text"  name="TRUSTAMT[]" id="trustamt_1" placeholder="TRUST AMOUNT" data-toggle="tooltip"  data-placement="top" title="TRUST AMOUNT" class="form-control ttlsum" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		        </div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+		<?
+		break;
+
+	case 7 :
+			?>
+			<div id='' style="padding-left: 10px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight"  style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_des_change(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-2 colheight"  style="padding: 0px;">EMPLOYEE</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">PHOTO</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">EXP</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">DOJ</div>
+		            <div class="col-sm-3 colheight"  style="padding: 0px;">
+		            	<div class="col-sm-12 colheight"  style="padding: 0px;">CURRENT</div>
+            			<div class="col-sm-4 colheight"  style="padding: 0px;">BRANCH </div>
+        	    		<div class="col-sm-4 colheight"  style="padding: 0px;overflow-wrap: break-word;">DEPARTMENT</div>
+	            		<div class="col-sm-4 colheight"  style="padding: 0px;overflow-wrap: break-word;">DESIGNATION</div>
+		            </div>
+		            <div class="col-sm-3 colheight"  style="padding: 0px;">CHANGE <br> DESIGNATION</div>
+		        </div>
+		        
+		     	<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-2 colheight" style="padding: 1px 0px;">	
+						<div>
+							<input type="text" name="EMPNAME[]" id="txt_staffcode_1" required="required" maxlength="100" placeholder="Employee Code / Name" title="Employee Code / Name" class="form-control find_empcode" data-toggle="tooltip"   data-placement="top" onBlur="addstaff(1,1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div id="photo_1">
+							
+						</div>	
+						<input type="hidden"  name="EMPSRNO[]" id="empsrno_1" value="">	
+		    		</div>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="exp_1"></label> -->
+		    			 <input type="text"  name="CUREXP[]" id="curexp_1" placeholder="EXPERIENCE" data-toggle="tooltip" data-placement="top" title="EXPERIENCE" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="doj_1"></label> -->
+		    			 <input type="text"  name="DATEOFJOIN[]" id="curdoj_1" placeholder="DOJ" data-toggle="tooltip" data-placement="top" title="DOJ" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="cbrn_1"></label> <br> -->
+		    			  <input type="text"  name="CURBRN[]" id="curbrn_1" placeholder="BRANCH" data-toggle="tooltip" data-placement="top" title="BRANCH" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <!-- <label id="cdep_1"></label> -->
+		    			 <input type="text"  name="CURDEP[]" id="curdep_1" placeholder="DEPARTMENT" data-toggle="tooltip" data-placement="top" title="DEPARTMENT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <!-- <label id="cdes_1"></label> -->
+		    			 <input type="text"  name="CURDES[]" id="curdes_1" placeholder="DESIGNATION" data-toggle="tooltip" data-placement="top" title="DESIGNATION" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		             
+		    		<div class="col-sm-3 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    		<?
+		    		$table = "designation";
+					if($slt_branch == '201' or $slt_branch == '202' or $slt_branch == '203' or $slt_branch == '204' or $slt_branch == '205' or $slt_branch =='206')
+					{
+						$table = "new_designation";
+					}
+					$sql_des = select_query_json( " select * from ".$table." emp where deleted='N' order by desname ", "Centra", 'TCS');
+					?>
+					<select class="form-control custom-select chosn" tabindex='1' autoFocus required 
+					name="NEWDES[]" id='newdes_1' data-toggle="tooltip" data-placement="top"    title="designation" >
+					<? foreach($sql_des as $des)
+					{
+					$desval = preg_replace('/[0-9]+/', '', $des['DESNAME']);
+					?>
+					<option value="<?=$desval?>"><?=$desval?></option>
+					<?}?>	
+					</select>
+		    		</div>
+		    	</div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+
+			<?
+			break;
+	case 8 :
+			?>
+			<div id='' style="padding-left: 10px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight"  style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_dept_change(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-2 colheight"  style="padding: 0px;">EMPLOYEE</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">PHOTO</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">EXP</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">DOJ</div>
+		            <div class="col-sm-3 colheight"  style="padding: 0px;">
+		            	<div class="col-sm-12 colheight"  style="padding: 0px;">CURRENT</div>
+            			<div class="col-sm-4 colheight"  style="padding: 0px;">BRANCH </div>
+        	    		<div class="col-sm-4 colheight"  style="padding: 0px;overflow-wrap: break-word;">DEPARTMENT</div>
+	            		<div class="col-sm-4 colheight"  style="padding: 0px;overflow-wrap: break-word;">DESIGNATION</div>
+		            </div>
+		            <div class="col-sm-3 colheight"  style="padding: 0px;">CHANGE <br> DEPARTMENT</div>
+		        </div>
+		        
+		     	<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-2 colheight" style="padding: 1px 0px;">	
+						<div>
+							<input type="text" name="EMPNAME[]" id="txt_staffcode_1" required="required" maxlength="100" placeholder="Employee Code / Name" title="Employee Code / Name" class="form-control find_empcode" data-toggle="tooltip"   data-placement="top" onBlur="addstaff(1,1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div id="photo_1">
+							
+						</div>	
+						<input type="hidden"  name="EMPSRNO[]" id="empsrno_1" value="">
+		    		</div>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="exp_1"></label> -->
+		    			 <input type="text"  name="CUREXP[]" id="curexp_1" placeholder="EXPERIENCE" data-toggle="tooltip" data-placement="top" title="EXPERIENCE" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="doj_1"></label> -->
+		    			 <input type="text"  name="DATEOFJOIN[]" id="curdoj_1" placeholder="DOJ" data-toggle="tooltip" data-placement="top" title="DOJ" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="cbrn_1"></label> <br> -->
+		    			 <input type="text"  name="CURBRN[]" id="curbrn_1" placeholder="BRANCH" data-toggle="tooltip" data-placement="top" title="BRANCH" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <!-- <label id="cdep_1"></label> -->
+		    			 <input type="text"  name="CURDEP[]" id="curdep_1" placeholder="DEPARTMENT" data-toggle="tooltip" data-placement="top" title="DEPARTMENT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;">	
+		    			 <!-- <label id="cdes_1"></label> -->
+		    			 <input type="text"  name="CURDES[]" id="curdes_1" placeholder="DESIGNATION" data-toggle="tooltip" data-placement="top" title="DESIGNATION" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		             
+		    		<div class="col-sm-3 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    		<?
+		    		$table = "empsection";
+					if($slt_branch == '201' or $slt_branch == '202' or $slt_branch == '203' or $slt_branch == '204' or $slt_branch == '205' or $slt_branch =='206')
+					{	$table = "new_empsection";}
+					$sql_dep = select_query_json( " select * from ".$table." emp where deleted='N' order by esename ", "Centra", 'TCS');?>
+
+					<select class="form-control custom-select chosn" tabindex='1' autoFocus required name='NEWDEP[]' id='newdep_<?=$id?>' data-toggle="tooltip" data-placement="top"    title="Department">
+					<? foreach($sql_dep as $dep)
+					{
+					$dept = preg_replace('/[0-9]+/', '', $dep['ESENAME']);
+					?>
+					<option value="<?=$dept?>"><?=$dept?></option>
+					<?}?>	
+					</select>
+		    		</div>
+		    	</div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+
+			<?
+			break;
+		case 9:
+			?>
+			<div id='' style="padding-left: 10px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight"  style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Employee" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_increment(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Employee" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-2 colheight"  style="padding: 0px;">EMPLOYEE</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">PHOTO</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">EXP</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">DOJ</div>
+		            <div class="col-sm-4 colheight"  style="padding: 0px;">
+		            	<div class="col-sm-12 colheight"  style="padding: 0px;">CURRENT</div>
+            			<div class="col-sm-3 colheight"  style="padding: 0px;">BRANCH </div>
+        	    		<div class="col-sm-3 colheight"  style="padding: 0px;overflow-wrap: break-word;">DEPARTMENT</div>
+	            		<div class="col-sm-3 colheight"  style="padding: 0px;overflow-wrap: break-word;">DESIGNATION</div>
+	            		<div class="col-sm-3 colheight"  style="padding: 0px;">BASIC</div>
+		            </div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">	INCREMENT <br> AMOUNT</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">NEW BASIC</div>
+		        </div>
+		        
+		        <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-2 colheight" style="padding: 1px 0px;">	
+						<div>
+							<input type="text" name="EMPNAME[]" id="txt_staffcode_1" required="required" maxlength="100" placeholder="Employee Code / Name" title="Employee Code / Name" class="form-control find_empcode" data-toggle="tooltip"   data-placement="top" onBlur="addstaff(1,2)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div id="photo_1">
+							
+						</div>	
+						<input type="hidden"  name="EMPSRNO[]" id="empsrno_1" value="">	
+		    		</div>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			<input type="text"  name="CUREXP[]" id="curexp_1" placeholder="EXPERIENCE" data-toggle="tooltip" data-placement="top" title="EXPERIENCE" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <input type="text"  name="DATEOFJOIN[]" id="curdoj_1" placeholder="DOJ" data-toggle="tooltip" data-placement="top" title="DOJ" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <input type="text"  name="CURBRN[]" id="curbrn_1" placeholder="BRANCH" data-toggle="tooltip" data-placement="top" title="BRANCH" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;overflow-wrap: break-word;">	
+		    			<input type="text"  name="CURDEP[]" id="curdep_1" placeholder="DEPARTMENT" data-toggle="tooltip" data-placement="top" title="DEPARTMENT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+	    			</div>
+	    			<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;overflow-wrap: break-word;overflow-wrap: break-word;">	
+	    				<input type="text"  name="CURDES[]" id="curdes_1" placeholder="DESIGNATION" data-toggle="tooltip" data-placement="top" title="DESIGNATION" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+	    			</div>
+	    			<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+	    				<input type="text"  name="CURBAS[]" id="curbas_1" placeholder="BASIC" data-toggle="tooltip" data-placement="top" title="BASIC" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+	    				<input type="text"  name="INCAMT[]" id="incamt_1" placeholder="INCREMENT AMOUNT" data-toggle="tooltip" data-placement="top" title="INCREMENT AMOUNT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		 <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			<input type="text"  name="NEWBAS[]" id="newbas_1" placeholder="NEW BASIC" data-toggle="tooltip" data-placement="top" title="NEW BASIC" class="form-control" style=" text-transform: uppercase;height: 25px;" onblur="newbasic(1);">
+		    		</div>
+				</div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+
+			<?
+			break;
+	case 6 :
+			?>
+			<div id='' style="padding-left: 10px; text-align: center;">
+			<div class="parts3 fair_border">
+				<div class="row" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; display: flex; font-weight: bold;">
+					<div class="col-sm-1 colheight"  style="padding: 0px; border-top-left-radius:5px;">
+						<input type="hidden" name="partint3" id="partint3" value="1">
+						<button class="btn btn-success btn-add3" id="addbtn" type="button" title="Add Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_brn_transfer(1)"><span class="glyphicon glyphicon-plus"></span></button>
+						<button id="removebtn" class="btn btn-remove btn-danger" type="button" title="Delete Product" style="padding: 2px 5px; margin-right: 0px !important;" onclick="emp_remove(1)"><span class="glyphicon glyphicon-minus"></span></button>&nbsp;#
+					</div>
+					<div class="col-sm-2 colheight"  style="padding: 0px;">EMPLOYEE</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">PHOTO</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">EXP</div>
+		            <div class="col-sm-1 colheight"  style="padding: 0px;">DOJ</div>
+		            <div class="col-sm-2 colheight"  style="padding: 0px;">CURRENT</div>
+		            <div class="col-sm-5 colheight"  style="padding: 0px;">
+		            	<div class="col-sm-12 colheight"  style="padding: 0px;">CHANGE</div>
+            			<div class="col-sm-2 colheight"  style="padding: 0px;">BRANCH </div>
+        	    		<div class="col-sm-5 colheight"  style="padding: 0px;">DEPARTMENT</div>
+	            		<div class="col-sm-5 colheight"  style="padding: 0px;">DESIGNATION</div>
+		            </div>
+		        </div>
+		        
+		     
+		        
+
+
+				<div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div class="fg-line">&nbsp;1</div>
+					</div>
+
+					<div class="col-sm-2 colheight" style="padding: 1px 0px;">	
+						<div>
+							<input type="text" name="EMPNAME[]" id="txt_staffcode_1" required="required" maxlength="100" placeholder="Employee Code / Name" title="Employee Code / Name" class="form-control find_empcode" data-toggle="tooltip"   data-placement="top" onBlur="addstaff(1,1)" style=" text-transform: uppercase; padding: 2px; height: 25px;">
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-sm-1 colheight" style="padding: 1px 0px;">
+						<div id="photo_1">
+							
+						</div>
+						<input type="hidden"  name="EMPSRNO[]" id="empsrno_1" value="">	
+		    		</div>
+
+		            <div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="exp_1"></label> -->
+		    			 <input type="text"  name="CUREXP[]" id="curexp_1" placeholder="EXPERIENCE" data-toggle="tooltip" data-placement="top" title="EXPERIENCE" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <!-- <label id="doj_1"></label> -->
+		    			 <input type="text"  name="DATEOFJOIN[]" id="curdoj_1" placeholder="DOJ" data-toggle="tooltip" data-placement="top" title="DOJ" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    		</div>
+		    		<div class="col-sm-2 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			<!-- <label style="font-weight:bolder;">BRANCH : </label><label id="cbrn_1"></label><br>
+		    			<label style="font-weight:bolder;">DEPT : </label><label id="cdep_1"></label> <br>
+		    			<label style="font-weight:bolder;">DESIG : </label><label id="cdes_1"></label> <br> -->
+		    			 
+		    			<input type="text"  name="CURBRN[]" id="curbrn_1" placeholder="BRANCH" data-toggle="tooltip" data-placement="top" title="BRANCH" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    			<input type="text"  name="CURDEP[]" id="curdep_1" placeholder="DEPARTMENT" data-toggle="tooltip" data-placement="top" title="DEPARTMENT" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+		    			<input type="text"  name="CURDES[]" id="curdes_1" placeholder="DESIGNATION" data-toggle="tooltip" data-placement="top" title="DESIGNATION" class="form-control" readonly="readonly" style=" text-transform: uppercase;height: 25px;" >
+
+		    		</div>
+		    		
+		    		<div class="col-sm-1 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    			 <select class="form-control custom-select chosn" tabindex='1' autoFocus required name='NEWBRN[]' id='newbrn_1' data-toggle="tooltip" data-placement="top"    title="Branch" onchange="getdept(1);">
+		    			 	<option value=""> BRANCH</option>
+								<? 	if($_SESSION['rights'] == 1) {
+										$sql_project = select_query_json("select brn.*, regexp_replace(SubStr(nicname,1,4),'[0-9]','')||SubStr(nicname,5,10) branch from branch brn 
+																					where brn.DELETED = 'N' and brn.BRNMODE in ('B', 'K') and (brn.brncode in (select distinct brncode 
+																						from budget_planner_head_sum) or brn.brncode in (109,114,117,119)) 
+																					order by brn.BRNCODE"); // 108 - TRY Airport Not available
+									} elseif(count($allow_branch) <= 5) {
+										$sql_project = select_query_json("select brn.*, regexp_replace(SubStr(nicname,1,4),'[0-9]','')||SubStr(nicname,5,10) branch from branch brn 
+																					where brn.DELETED = 'N' and brn.BRNMODE in ('B', 'K') and brn.brncode in (".$_SESSION['tcs_allowed_branch'].") 
+																						and (brn.brncode in (select distinct brncode from budget_planner_head_sum) 
+																						or brn.brncode in (109,114,117,119)) 
+																					order by brn.BRNCODE"); // 108 - TRY Airport Not available
+									} else {
+										$sql_project = select_query_json("select brn.*, regexp_replace(SubStr(nicname,1,4),'[0-9]','')||SubStr(nicname,5,10) branch from branch brn 
+																					where brn.DELETED = 'N' and brn.BRNMODE in ('B', 'K') and (brn.brncode in (select distinct brncode 
+																						from budget_planner_head_sum) or brn.brncode in (109,114,117,119)) 
+																					order by brn.BRNCODE"); // 108 - TRY Airport Not available
+									}
+									for($project_i = 0; $project_i < count($sql_project); $project_i++) { ?>
+										<option value='<?=$sql_project[$project_i]['BRANCH']?>'><?=$sql_project[$project_i]['BRANCH']?></option>
+								<? } ?>
+								</select>
+		    		</div>
+		    		<div class="col-sm-2 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+		    		<div id = "staff_dept_1"></div>
+		    		</div>
+		    		<div class="col-sm-2 colheight" style="padding: 1px 0px; text-align: center; padding-left: 2px;">	
+	    				<div id = "staff_des_1"></div>
+		    		</div>
+				</div>
+				</div>
+			</div>
+			<div class='clear clear_both'></div>
+		</div>
+		<div class='clear clear_both'></div>
+
+			<?
+			break;
+	default:
+	// Arun G - 26-02-2018
+	/* ?>
+	<!-- <input type="checkbox" name="alw_create" id="alw_create" onclick="default_view();"> --> 
+	<input type="hidden" name="default_lock" id="default_lock" value="1">
+	<label style="font-size: large;color: red;" for="alw_create" class="blinking">Create General Format :</label>
+			<div id="general"> <!-- //style="display: none" -->
+			<div class="row">
+				<div class="col-md-1">
+					<input type="button" name="backcol" id="backcol" value="BACK" style="display:none;text-align: right;margin-top: 5px;" class="btn btn-primary" onclick="back_col();">
+				</div>
+				<div class="col-md-3">  </div>
+				<div class="col-md-2"><input type="number" name="noofcol" id="noofcol" value="" placeholder="No Of Columns required" required class="form-control"></div>
+				<div class="col-md-3"><input type="button" name="coladd" id="coladd" class="btn" onclick="coladd_new();" value="LOAD" style="margin-top: 5px;background-color: #E91E63;color: white;"></div>
+				<div class="col-md-3">
+					<input type="button" name="createtemp" id="createtemp" value="CREATE" onclick="create_temp();" style="display: none;margin-top: 5px;" class="btn btn-success">
+				</div>				
+			</div>
+			<div id="genearl_temp"></div>
+			</div>
+			<div style="border-top: 1px solid #d4d4d4; width: 100%; padding: 0% 2%; height: 5px;margin-top: 10px;"></div>
+			<?break;
+
+			// Non - Budget & Non Value based approvals */
+			// Arun G - 26-02-2018
+	?>
+	<!-- default:  -->
+	<!-- <input type="checkbox" name="alw_create" id="alw_create" onclick="default_view();"> <label style="font-size: large;color: red;" for="alw_create" class="blinking">Create General Format :</label>
+			<div id="general" style="display: none">
+			<div class="row">
+				<div class="col-md-1">
+					<input type="button" name="backcol" id="backcol" value="BACK" style="display:none;text-align: right;margin-top: 5px;" class="btn btn-primary" onclick="back_col();">
+				</div>
+				<div class="col-md-3"> </div>
+				<div class="col-md-2"><input type="number" name="noofcol" id="noofcol" value="" placeholder="No Of Columns required" class="form-control"></div>
+				<div class="col-md-3"><input type="button" name="coladd" id="coladd" class="btn" onclick="coladd_new();/*load_gen_temp(9);*/" value="LOAD" style="margin-top: 5px;background-color: #E91E63;color: white;"></div>
+				<div class="col-md-3">
+					<input type="button" name="createtemp" id="createtemp" value="CREATE" onclick="create_temp();" style="display: none;margin-top: 5px;" class="btn btn-success">
+				</div>				
+			</div>
+			<div id="genearl_temp"></div>
+			</div>
+			<div style="border-top: 1px solid #d4d4d4; width: 100%; padding: 0% 2%; height: 5px;margin-top: 10px;"></div> -->
+			<?//break;
+}
+?>
+<div class='clear clear_both'></div>

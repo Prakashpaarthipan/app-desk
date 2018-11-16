@@ -1,0 +1,31 @@
+9199 - HYDERABAD - MALL PROJECT   no
+9049 - ADVT - BARRY GUARD  yes
+9048 - ADVT - VM   no
+9047 - ADVT - CAMERA POLE     yes
+9046 - ADVT - ROAD SHOW    no
+9045 - ADVT - RAILWAY JINGLE    yes
+9044 - ADVT - SPONSERSHIPS     yes
+9043 - ADVT - IN SHOP ADVERTISEMENT   no
+9042 - ADVT - SIGNAL BOARD   yes
+9041 - ADVT - CENTERMEDIAN   yes
+9040 - ADVT - HOARDINGS    yes
+9039 - ADVT - THEATER ADVERTISEMENT  no
+9038 - ADVT - LOCAL CHANNALS    yes
+9037 - ADVT - WALL PAINTING   yes yes
+9036 - ADVT - SOCIAL MEDIA   no
+9035 - ADVT - OTHER CONCERNS   no
+9034 - ADVT - RADIO     yesyes
+9033 - ADVT - EVENT MEDIA   no
+9032 - ADVT - SPONSERSHIPS COMMON   no
+9031 - ADVT - PHOTOSHOOT   no
+9030 - ADVT - TV MEDIA     no
+9029 - ADVT - NEWS PAPER   no
+9028 - ADVT - MAGAZINE   no
+9007 - MD - ANUMALERVILI MADAM    no
+9008 - MD - SIVASANKARIBABU MADAM   no
+
+9208 emergency donation
+
+
+Select distinct sec.esecode, substr(sec.esename, 4, 25) esename, am.TOPCORE , atc.ATCNAME From approval_master am , APPROVAL_TOPCORE atc , empsection sec
+					where sec.esecode = am.subcore and am.TOPCORE = atc.ATCCODE and am.deleted = 'N' and atc.deleted = 'N' and sec.deleted = 'N' and am.TARNUMB = '".$ledger[0]."'"

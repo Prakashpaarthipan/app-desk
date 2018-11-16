@@ -1,0 +1,179 @@
+<ul class="breadcrumb">
+    <li><a href="home.php">Dashboard</a></li>
+    <li class="active">Reports - {{title}}</li>
+</ul>
+
+<div class="page-content-wrap">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Approvals List</h3>
+
+        </div>
+        <div class="panel-body">
+            <div class="form-group trbg non-printable">
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px 5px 0 5px;'>
+                        <input type='text' ng-model="APRNUMB_VAL" class="form-control" style="text-transform:uppercase" maxlength="100" data-toggle="tooltip" data-placement="top" placeholder='Approval No' title="Approval No">
+                    </div>
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+                        <input type='text' ng-model="APPFVAL_FILTER" class="form-control" tabindex='2' name='search_value' id='search_value' value='' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='VALUE' title="Value" style='text-transform: uppercase;'>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+
+                        <!--<input type='date' ng-model="ADDDATE_FRO" ng-change="filterFromdate(ADDDATE_FRO , ADDDATE_TO)" class="form-control" tabindex='2' name='search_value' value='FROM DATE' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='FROM DATE' title="FROM DATE" style='text-transform: uppercase;'>-->
+                        <datepicker
+                          date-format="d - MMMM - y"
+                          button-prev='<i class="fa fa-arrow-circle-left"></i>'
+                          button-next='<i class="fa fa-arrow-circle-right"></i>'>
+                          <input  ng-model="ADDDATE_FRO" ng-change="filterFromdate(ADDDATE_FRO , ADDDATE_TO)" type="text" class="form-control font-fontawesome font-light radius3" placeholder="&#xf073; -- FROM DATE" title="FROM DATE" style="text-transform: uppercase;"/>
+                        </datepicker>
+                    </div>
+                    <!-- filter form -->
+                    <!--<form method="post" role="form" id="frm_filter">
+                      <input type="hidden" name="id" value="{{route_id}}"/>
+                      <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+                        <div class="input-group stylish-input-group">
+                            <input type='date' id="datepicker-example4" class="form-control" tabindex='2' name='from_date_value' value='' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='FROM DATE' title="FROM DATE" style='text-transform: uppercase;'>
+                            <span class="input-group-addon">
+                                <button type="submit" ng-click="filterFromdat()" title="Search">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </span>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+                        <div class="input-group stylish-input-group">
+                            <input type='date' id="datepicker-example41" class="form-control" tabindex='2' name='to_date_value' value='' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='FROM DATE' title="FROM DATE" style='text-transform: uppercase;'>
+                            <span class="input-group-addon">
+                                <button type="submit" ng-click="filterFromdat()" title="Search">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </span>
+
+                        </div>
+                      </div>
+                    </form>-->
+
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+
+                        <!--<input type='date' ng-model="ADDDATE_TO" ng-change="filterFromdate(ADDDATE_FRO , ADDDATE_TO)" class="form-control" tabindex='2' name='search_value' id='search_value' value='TO DATE' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='TO DATE' title="TO DATE" style='text-transform: uppercase;'>-->
+                        <datepicker
+                          date-format="d - MMMM - y"
+                          button-prev='<i class="fa fa-arrow-circle-left"></i>'
+                          button-next='<i class="fa fa-arrow-circle-right"></i>'>
+                          <input ng-model="ADDDATE_TO" ng-change="filterFromdate(ADDDATE_FRO , ADDDATE_TO)" type="text" class="mob_response form-control font-fontawesome font-light radius3" placeholder="&#xf073; -- TO DATE" title="TO DATE" style="text-transform: uppercase;"/>
+                        </datepicker>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+                        <input type='text' ng-model="ATYCODE_FROM" class="form-control" tabindex='2' name='search_value' id='search_value' value='' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='TOP CORE' title="Value" style='text-transform: uppercase;'>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4 col-lg-2" style='text-align:center; padding:5px;'>
+                        <input type='text' ng-model="PRICODE_FILTER" class="form-control" tabindex='2' name='search_value' id='search_value' value='' data-toggle="tooltip" data-placement="top" maxlength="10" placeholder='FILTER PRIORITY' title="Value" style='text-transform: uppercase;'>
+                    </div>
+            </div>
+            <div class="non-printable" style='clear:both; border-bottom:1px solid #ADADAD; margin-bottom:10px; margin-top: 10px;'></div>
+
+            <table ng-table="usersTable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Approval Number</th>
+                        <th>Details</th>
+                        <th>Value <i class="fa fa-inr" aria-hidden="true"></i></th>
+                        <th>Request by</th>
+                        <th>Request to</th>
+                        <th style='text-align:center;'>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                        <tr ng-repeat="x in emp_report | filter:{APRNUMB : APRNUMB_VAL, APPFVAL: APPFVAL_FILTER, PRINAME : PRICODE_FILTER , ATYCODE : ATYCODE_FROM} | limitTo : limit | filter:query as results">
+                            <td>{{x.sno}}</td>
+                            <td>
+                              <span ng-show="(x.PRICODE == '3' ? true : false)" class="label label-info label-form" style="background-color:#299654">{{x.PRINAME}}</span>
+                              <span ng-show="(x.PRICODE == '1' ? true : false)" class="label label-info label-form" style="background-color:RED">{{x.PRINAME}}</span>
+                              <span ng-show="(x.PRICODE == '2' ? true : false)" class="label label-info label-form" style="background-color:BLUE">{{x.PRINAME}}</span>
+                            </td>
+                            <td>{{x.APPSTATUS}}</td>
+                            <td>
+                              <a href="view_pending_approval.php?action=view&reqid={{x.ARQCODE}}&year={{x.ARQYEAR}}&rsrid=1&creid={{x.ATCCODE}}&typeid={{x.ATYCODE}}" target="_blank">{{x.APRNUMB}}</a></td>
+                            <td>
+                              <span ng-show="(x.APPRFOR != '1' ? true : false)">
+                                {{x.APPRDET}}
+                              </span>
+                              <span ng-show="(x.APPRFOR === '1' ? true : false)">
+                                  <object data="http://www.tcsportal.com/approval-desk/get_content_details.php?get_ftp_file={{x.APPRSUB}}&file_limit=1000" width='100%'><p></p></object>
+                              </span>
+
+                            </td>
+
+                            <td>
+                              <span ng-hide="(x.APPFVAL === '0' ? true : false)">
+                                {{x.APPFVAL}}
+                              </span>
+                              <span ng-hide="(x.APPFVAL === '0' ? false : true)">
+                                - Nil -
+                              </span>
+                            </td>
+                            <td>{{x.REQBY}}</td>
+                            <td>{{x.PNDINGBY}}</td>
+                            <!--<td>{{x.APRTITL}} {{x.REQTO}}</td>-->
+                            <td class="text-center">
+                              <!--<a href="waiting_approvals.php?action=view&reqid={{x.ARQCODE}}&year={{x.ARQYEAR}}&rsrid={{x.ARQSRNO}}&creid={{x.ATCCODE}}&typeid={{x.ATYCODE}}" target="_blank"><i class="fa fa-eye"></i> View</a>-->
+                              <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="viewReport(x.APRNUMB)">VIEW</button>-->
+                              <a href="view_pending_approval.php?action=view&reqid={{x.ARQCODE}}&year={{x.ARQYEAR}}&rsrid=1&creid={{x.ATCCODE}}&typeid={{x.ATYCODE}}" target="_blank"><i class="fa fa-eye"></i> View</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="results.length > '49'">
+                          <td colspan="10" ng-hide="results.length < limit">
+                            <button ng-click="limit = limit + 50" class="form-control text-center" style="color:green"> Click Here To Load More Approvals</button>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="10" ng-hide="(results.length === 0 ? false : true)">
+                            <div class="alert" style="background:#f2dede">
+                              <h1 class="blink_me text-center" style="color:red"> <b>No data Available</b> </h1>
+                            </div>
+                          </td>
+                        </tr>
+
+                </tbody>
+            </table>
+            <!--<div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{answer}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+        </div>
+    </div>
+</div>
+<style>
+.mob_response {
+    margin: 0;
+}
+@media only screen and (max-width: 765px) {
+  .mob_response {
+      margin: 20px 0;
+  }
+}
+</style>

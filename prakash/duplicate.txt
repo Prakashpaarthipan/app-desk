@@ -1,0 +1,97 @@
+$project_level_2 = select_query_json("select * from approval_project_master pm , approval_project_head ph , approval_project_heirarchy ah 
+										where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+										ah.APPSRNO ='1' and ah.APPSTAT ='Y' and ah.PRMSCOD = pm.PRMSCOD ORDER BY PM.PRMSCOD", "Centra", "TEST");
+											for($project_L2 = 0; $project_L2 < count($project_level_2); $project_L2++) {
+													$row = 1;
+									
+												
+												
+												
+												/*elseif ($_SESSION['tcs_empsrno'] == 61579){
+										$project_level_2 = select_query_json("select * from approval_project_master pm , approval_project_head ph , approval_project_heirarchy ah 
+										where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+										ah.APPSRNO ='1' and ah.APPSTAT ='Y' and ah.PRMSCOD = pm.PRMSCOD ORDER BY PM.PRMSCOD", "Centra", "TEST");
+											for($project_L2 = 0; $project_L2 < count($project_level_2); $project_L2++) {
+													$row = 1;
+													?>
+												
+													<tr>
+													<td><?echo ($project_L2+1);?></td>
+													 <td><?echo $project_level_2[$project_L2]['PRMSCOD'];?></td>
+													<!-- <th><input type="text" id="p_code_<?echo ($project_L2+1);?>" value="<?echo $project_level_2[$project_L2]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+													<td><?echo $project_level_2[$project_L2]['PRJNAME'];?></td>
+													<td><?echo $project_level_2[$project_L2]['BRNNAME'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TOPCORE'];?></td>
+													<td><?echo $project_level_2[$project_L2]['SUBCRNM'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNUMB'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNAME'];?></td>
+													<td><?if ($project_level_2[$project_L2]['BRN_PRJ'] == 'P') {
+													  echo "NEW PROJECT";
+													}else {
+													  echo "BRANCH";
+													} ?></td>
+													 <td><?echo $project_level_2[$project_L2]['BRNNAME']." / ".$project_level_2[$project_L2]['TOPCORE']." / ".$project_level_2[$project_L2]['SUBCRNM']." / ".$project_level_2[$project_L2]['TARNUMB']." - ".$project_level_2[$project_L2]['TARNAME']." / ".$project_level_2[$project_L2]['PRJNAME'];?></td>
+													 <td class="text-center">
+													 
+													<a class='btn btn-info btn-sm'
+													 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $project_level_2[$project_L2]['PRMSYER'];?>&id=<?echo $project_level_2[$project_L2]['PRMSCOD'];?>">
+													<span class="glyphicon glyphicon-edit"></span> Edit</a>
+
+													 </td>
+													 </tr>
+													<? 
+													}
+											}
+												 //condition to check second stage of approval process
+												 */
+												 
+												 
+												 
+												 
+												 
+												 $("#approve_btn").click(function(e){
+				
+				var formdata = $("#frm_project_modify").serializeArray();
+				//alert(formdata.length);
+				//var id2 = formdata.length;
+				//alert (id2);
+				
+				
+				e.preventDefault();			
+
+				var confirm1 = confirm("Do you want to approve the project?");
+				
+				if( confirm1 == true){
+					var ap_id = <?echo $admin_project[0]['PRMSCOD'];?>;
+					var yip2=java.net.InetAddress.getLocalHost();	
+					var ap_sys=yip2.getHostAddress();
+					var ap_pc = <? echo gethostname();?>
+					$.ajax({
+					type:"post",
+					//url:"prakash/editapproval.php",
+					//data:({id1 : id1},{id2 : id2}),
+					//cache:false,
+					
+					/* above the code is for general approval uncomment it*/
+					
+					alert(ap_id+" "+ap_sys+" "+ap_pc6)
+					url:"prakash/project_heirarchy_.php",
+					data : ({ap_id : a_id},{},{ap_sys : a_ip}),
+					dataType: 'text',
+					success: function(data){
+						//alert (" Thank You .project is approved");
+						//alert(data);
+						console.log(data);
+						}
+					
+					});	
+					
+				
+				}
+				else{
+					alert("project did not approval yet");
+					//return false;
+				}return false;
+							
+			});
+					/*

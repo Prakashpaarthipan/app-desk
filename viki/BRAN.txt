@@ -1,0 +1,83 @@
+ If NIP >= 8 And NIP <= 12 Then
+                    Return 1
+                ElseIf (NIP >= 16 And NIP <= 20) Or NIP = 61 Then
+                    Return 2
+                ElseIf NIP >= 24 And NIP <= 28 Then
+                    Return 3
+                ElseIf NIP >= 32 And NIP <= 36 Then
+                    Return 4
+                ElseIf NIP >= 39 And NIP <= 39 Then
+                    Return 21
+                ElseIf NIP >= 40 And NIP <= 44 Then
+                    Return 5
+                ElseIf NIP >= 56 And NIP <= 60 Then
+                    Return 7
+                ElseIf NIP >= 64 And NIP <= 68 Then
+                    Return 8
+                ElseIf NIP >= 72 And NIP <= 76 Then
+                    Return 9
+                ElseIf NIP >= 80 And NIP <= 84 Then
+                    Return 10
+                ElseIf NIP >= 88 And NIP <= 92 Then
+                    Return 11
+                ElseIf NIP >= 48 And NIP <= 50 Or NIP = 52 Or NIP = 53 Then
+                    Return 888
+                    'ElseIf NIP >= 152 And NIP <= 152 Then
+                    '    'Return 109
+                    '    Return 14
+                ElseIf NIP >= 51 And NIP <= 51 Then
+                    Return 109
+                ElseIf NIP >= 104 And NIP <= 108 Then
+                    Return 12
+                ElseIf NIP >= 112 And NIP <= 116 Then
+                    Return 13
+                ElseIf (NIP >= 120 And NIP <= 124) Then
+                    Return 14
+                ElseIf NIP = 1000 Then
+                    Return 102
+                ElseIf NIP = 1001 Then
+                    Return 103
+                ElseIf (NIP >= 96 And NIP <= 100) Then
+                    Return 104
+                ElseIf NIP = 10 Then
+                    Return 105
+                ElseIf NIP = 1002 Then
+                    Return 107
+                ElseIf NIP = 1003 Then
+                    Return 108
+                ElseIf NIP = 1004 Then
+                    Return 111
+                ElseIf NIP = 1005 Then 'MDU AIR
+                    Return 112
+                ElseIf NIP = 1006 Then 'MUM AIR
+                    Return 113
+                ElseIf NIP = 1007 Then 'TAIL YOU
+                    Return 114
+                ElseIf NIP = 1008 Then 'CHN AIRPORT
+                    Return 116
+                ElseIf NIP = 1 Then
+                    Return 888
+                ElseIf (NIP >= 128 And NIP <= 132) Then
+                    Return 15
+                ElseIf (NIP >= 144 And NIP <= 148) Then
+                    Return 17
+                ElseIf (NIP >= 136 And NIP <= 140) Then
+                    Return 16
+                ElseIf (NIP >= 152 And NIP <= 160) Then
+                    Return 19
+                ElseIf NIP >= 30 And NIP <= 30 Then
+                    Return 20
+                ElseIf NIP = 1009 Then 'Centra
+                    Return 100
+                    'ElseIf getMacAddress() = "782BCBA01A71" Then '782BCBA01A71
+                    '    Return 104
+                    'ElseIf getMacAddress() = "00232454CF93" Then '00232454CF93
+                    '    Return 107
+                    'ElseIf getMacAddress() = "00232454D123" Then
+                    '    Return 108
+                    'Else
+                    '    Return 888
+                    'End If
+                Else
+                    Return 888
+                End If

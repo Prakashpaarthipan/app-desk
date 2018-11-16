@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <!-- META SECTION -->
+    <title> Request Entry :: Approval Desk :: </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    <?  $theme_view = "css/theme-default.css";
+        if(isset($_COOKIE['assign_theme'])) { $theme_view = $_COOKIE['assign_theme']; } ?>
+    <link rel="stylesheet" type="text/css" id="theme" href="<?=$theme_view?>"/>
+    <!-- EOF CSS INCLUDE -->
+    <link href="css/jquery-customselect.css" rel="stylesheet" />
+    <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+    <link href="css/monthpicker.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.min.css" />
+    <!-- multiple file upload -->
+    <link href="css/jquery.filer.css" rel="stylesheet">
+    <script src="js/angular.js"></script>
+</head>
+
+    <body>
+	<table>
+					   
+                                    <div id='id_policy_approval' style="padding-left: 10px; text-align: center; display: none;">
+                                        <div class="parts3 fair_border">
+                                            <div class="row colheight" style="margin-right: -5px; text-transform: uppercase; background-color: #666666; color:#FFFFFF; border-top-left-radius:5px; border-top-right-radius: 5px; line-height: 25px; font-weight: bold; text-align: center;">
+                                                POLICY - APPROVAL
+                                            </div>
+											<thead><th>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">POLICY SUBJECT : </div>
+                                                <div class="col-sm-9 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <select class="form-control policy_approval_required" required name='txtdynamic_subject' id='txtdynamic_subject' data-toggle="tooltip" data-placement="top" data-original-title="POLICY SUBJECT">
+                                                        <?  $sql_project = select_query_json("select * from approval_policy_master where DELETED = 'N' order by aplcysr", "Centra", 'TEST');
+                                                            for($project_i = 0; $project_i < count($sql_project); $project_i++) { ?>
+                                                                <option value='<?=$sql_project[$project_i]['APLCYCD']?>' <? if($sql_reqid[0]['APLCYCD'] == $sql_project[$project_i]['APLCYCD']) { ?> selected <? } ?>><?=$sql_project[$project_i]['APLCYNM']?></option>
+                                                        <? } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-1 colheight" style="padding: 0px; text-align: center; line-height: 30px; font-weight: bold;"><?=strtoupper(date('d-M-Y'));?></div>
+                                            </div></th></thead>
+                                                <tbody>
+												<tr>
+												<td>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">EFFECTIVE DATE : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type="text" name="txtdynamic_efct_date" id="datepicker_example5" class="form-control policy_approval_required" required readonly placeholder='EFFECTIVE DATE' autocomplete='off' value='<?=strtoupper(date("d-M-Y"));?>' style='text-transform:uppercase; ' maxlength='11' title='EFFECTIVE DATE'>
+                                                </div></td><td>
+
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">POLICY TYPE : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <select class="form-control policy_approval_required" required name='txtdynamic_policy_type' id='txtdynamic_policy_type' data-toggle="tooltip" data-placement="top" data-original-title="POLICY TYPE">
+                                                        <option value='ORIGINAL'>ORIGINAL</option>
+                                                        <option value='RENEWAL'>RENEWAL</option>
+                                                    </select>
+                                                </div>
+                                            </div></td></tr>
+                                             <tr><td>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">VALID UPTO : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type="text" name="txtdynamic_valid_upto" id="datepicker_example6" class="form-control policy_approval_required" required readonly placeholder='VALID UPTO' autocomplete='off' value='<?=strtoupper(date("d-M-Y"));?>' style='text-transform:uppercase; ' maxlength='11' title='VALID UPTO'>
+                                                </div></td><td>
+
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">CREATOR : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='text' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_creator' id='txtdynamic_creator' data-toggle="tooltip" data-placement="top" data-original-title="CREATOR" value='<?=$sql_emp[0]['EMPCODE']." - ".$sql_emp[0]['EMPNAME']." - ".substr($sql_emp[0]['ESENAME'], 3)?>'>
+                                                </div>
+                                            </div></td></tr>
+                                              <tr><td>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">CO-ORDINATOR : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='text' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_coordinator' id='txtdynamic_coordinator' data-toggle="tooltip" data-placement="top" data-original-title="CO-ORDINATOR" value='<?=$sql_emp[0]['EMPCODE']." - ".$sql_emp[0]['EMPNAME']." - ".substr($sql_emp[0]['ESENAME'], 3)?>'>
+                                                </div></td><td>
+
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">ASSIST BY : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='text' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_assistby' id='txtdynamic_assistby' data-toggle="tooltip" data-placement="top" data-original-title="ASSIST BY" value='<?=$sql_emp[0]['EMPCODE']." - ".$sql_emp[0]['EMPNAME']." - ".substr($sql_emp[0]['ESENAME'], 3)?>'>
+                                                </div>
+                                            </div></td></tr>
+                                              <tr><td>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">USER LIST : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='text' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_userlist' id='txtdynamic_userlist' data-toggle="tooltip" data-placement="top" data-original-title="USER LIST" value='<?=$sql_emp[0]['EMPCODE']." - ".$sql_emp[0]['EMPNAME']." - ".substr($sql_emp[0]['ESENAME'], 3)?>'>
+                                                </div></td><td>
+
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">APPROVED BY : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='text' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_approvedby' id='txtdynamic_approvedby' data-toggle="tooltip" data-placement="top" data-original-title="APPROVED BY" value='<?=$sql_emp[0]['EMPCODE']." - ".$sql_emp[0]['EMPNAME']." - ".substr($sql_emp[0]['ESENAME'], 3)?>'>
+                                                </div>
+                                            </div></td></tr>
+                                            <tr><td>
+                                            <div class="row" style="margin-right: -5px; display: flex; text-transform: uppercase;">
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">DESK PROCEDURE : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='file' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_deskprocedure' id='txtdynamic_deskprocedure' data-toggle="tooltip" data-placement="top" data-original-title="DESK PROCEDURE" value=''>
+                                                </div></td><td>
+
+                                                <div class="col-sm-2 colheight" style="padding: 0px; text-align: right; line-height: 30px;">POLICY DOCUMENTS : </div>
+                                                <div class="col-sm-4 colheight" style="padding: 0px; line-height: 30px;">
+                                                    <input type='file' class="form-control policy_approval_required" style="text-transform: uppercase;" required name='txtdynamic_policy_docs' id='txtdynamic_policy_docs' data-toggle="tooltip" data-placement="top" data-original-title="POLICY DOCUMENTS" value=''>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div></td></tr>
+                                        <div class='clear clear_both'></div>
+                                    </div>  
+                                    <div class='clear clear_both'></div>
+                                </div>
+								</tbody></table>
+                                <!-- Policy Docs-->
+                          <? include "lib/app_footer.php"; ?>
+<!-- START SCRIPTS -->
+    <!-- START PLUGINS -->
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- END PLUGINS -->
+
+    <!-- START THIS PAGE PLUGINS-->
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+    <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+    <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/tableExport.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jquery.base64.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/html2canvas.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/libs/sprintf.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/jspdf.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/libs/base64.js"></script>
+    <script type="text/javascript" src="js/zebra_datepicker.js"></script>
+    <!-- END THIS PAGE PLUGINS-->
+
+    <!-- START TEMPLATE -->
+    <script type="text/javascript" src="js/settings.js"></script>
+
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+
+    <script type="text/javascript" src="js/demo_dashboard.js"></script>
+    <!-- Select2 -->
+    <script src="../dist/newlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <!-- END TEMPLATE -->
+     <!-- Custom Scripts - Arun Rama Balan.G -->
+    <script src="ajax/ajax_staff_change.js"></script>
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
+    <? /* <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script> */ ?>
+    <script src="js/monthpicker.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate-3.0.0.min.js" charset="UTF-8"></script>
+
+    <!-- Validate Form using Jquery -->
+    <script src="js/form-validation.js"></script>
+    <script type="text/javascript" src="js/zebra_datepicker.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+    <script src="js/jquery.filer.js" type="text/javascript"></script>
+    <script src="js/custom.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="js/jquery-customselect.js"></script>
+    <script type="text/javascript" src="js/angular-route.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/angular-route-segment.min.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<link href="css/fSelect.css" rel="stylesheet">
+    <script src="js/fSelect.js"></script>
+    <script type="text/javascript">
+	/*$('#slt_appflow_users').fSelect();
+
+	function reject_reason(iv) {
+		var aa = document.getElementById("chk_reject_reason_"+iv).checked;
+		var cnt = $('input.common_style:checked').length;
+		if(cnt >= 1) {
+			if(aa == false) {
+				$("#hid_reason_reject_"+iv).val("");
+				$("#hid_reason_reject_"+iv).attr("required", true);
+				$("#id_reason_reject_"+iv).css('display', 'block');
+			} else {                            
+				$("#hid_reason_reject_"+iv).val("");
+				$("#hid_reason_reject_"+iv).attr("required", false);
+				$("#id_reason_reject_"+iv).css('display', 'none');
+			}
+		} else {
+			alert("Atleast one Product must need to proceed further. Or kindly reject this approval!!");
+			$("#chk_reject_reason_"+iv).prop('checked', true);
+		}
+	}
+   */
+		$(document).ready(function() {
+        $("#load_page").fadeOut("slow");
+        $(".finish_confirm").click( function() {
+        });
+    });
+
+    $(document).keypress(function(e) {
+        if (e.keyCode == 27) {
+            $("#myModal1").fadeOut(500);
+        }
+    });
+
+    $('#datepicker-example3').Zebra_DatePicker({
+      direction: false, // 1,
+      format: 'd-M-Y',
+      pair: $('#datepicker-example4')
+    });
+
+    $('#datepicker-example4').Zebra_DatePicker({
+      direction: [1, '<?=date("d-M-Y")?>'], // ['<?=date("d-M-Y")?>', 0], // 0,
+      format: 'd-M-Y'
+    });
+	$('#datepicker-example5').Zebra_DatePicker({
+      direction: false, // 1,
+      format: 'd-M-Y',
+      pair: $('#datepicker-example4')
+    });
+	 $('#txtdynamic_creator').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/ajax_employee_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           type: 'employee'
+                        },
+                        success: function( data ) {
+                            if(data == 'No User Available in this Top core and Sub Core') {
+                                $('#txtdynamic_creator').val('');
+                                var ALERT_TITLE = "Message";
+                                var ALERTMSG = "No User Available. Kindly Change this!!";
+                                createCustomAlert(ALERTMSG, ALERT_TITLE);
+                            } else {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item,
+                                        value: item
+                                    }
+                                }));
+                            }
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+
+            $('#txtdynamic_coordinator').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/ajax_employee_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           type: 'employee'
+                        },
+                        success: function( data ) {
+                            if(data == 'No User Available in this Top core and Sub Core') {
+                                $('#txtdynamic_coordinator').val('');
+                                var ALERT_TITLE = "Message";
+                                var ALERTMSG = "No User Available. Kindly Change this!!";
+                                createCustomAlert(ALERTMSG, ALERT_TITLE);
+                            } else {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item,
+                                        value: item
+                                    }
+                                }));
+                            }
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+			$('#txtdynamic_assistby').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/ajax_employee_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           type: 'employee'
+                        },
+                        success: function( data ) {
+                            if(data == 'No User Available in this Top core and Sub Core') {
+                                $('#txtdynamic_assistby').val('');
+                                var ALERT_TITLE = "Message";
+                                var ALERTMSG = "No User Available. Kindly Change this!!";
+                                createCustomAlert(ALERTMSG, ALERT_TITLE);
+                            } else {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item,
+                                        value: item
+                                    }
+                                }));
+                            }
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+
+            $('#txtdynamic_userlist').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/ajax_employee_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           type: 'employee'
+                        },
+                        success: function( data ) {
+                            if(data == 'No User Available in this Top core and Sub Core') {
+                                $('#txtdynamic_userlist').val('');
+                                var ALERT_TITLE = "Message";
+                                var ALERTMSG = "No User Available. Kindly Change this!!";
+                                createCustomAlert(ALERTMSG, ALERT_TITLE);
+                            } else {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item,
+                                        value: item
+                                    }
+                                }));
+                            }
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+
+            $('#txtdynamic_approvedby').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/ajax_employee_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           type: 'employee'
+                        },
+                        success: function( data ) {
+                            if(data == 'No User Available in this Top core and Sub Core') {
+                                $('#txtdynamic_approvedby').val('');
+                                var ALERT_TITLE = "Message";
+                                var ALERTMSG = "No User Available. Kindly Change this!!";
+                                createCustomAlert(ALERTMSG, ALERT_TITLE);
+                            } else {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item,
+                                        value: item
+                                    }
+                                }));
+                            }
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+            // Policy approval
+
+
+
+            $('#txt_suppliercode').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url : 'ajax/get_supplier_details.php',
+                        dataType: "json",
+                        data: {
+                           name_startsWith: request.term,
+                           slt_core_department: $('#slt_core_department').val(),
+                           action: 'supplier_details'
+                        },
+                        success: function( data ) {
+
+                            response( $.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 0
+            });
+
+
+	</script>										
+
+      </body>
+</html> 

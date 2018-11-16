@@ -1,0 +1,4 @@
+select ent.entstat,ent.entryyr,ent.entryno,ent.entsrno,atc.atcname,pri.priname,pri.pridesc,count(atch.atcname) acount,ent.dspfile,eof.empname,eof.empcode
+from process_requirement_entry ent , trandata.approval_topcore atc ,trandata.APPROVAL_Priority pri,process_requirement_attachment atch,employee_office eof,userid usid
+where atc.atccode=ent.atccode and pri.pricode=ent.pricode and atch.entryyr=ent.entryyr and atch.entryno=ent.entryno and usid.usrcode=ent.adduser and eof.empsrno=usid.empsrno 
+group by ent.entryyr,ent.entryno,ent.entsrno,atc.atcname,ent.dspfile,pri.priname,eof.empname,eof.empcode,pri.pridesc,ent.entstat;

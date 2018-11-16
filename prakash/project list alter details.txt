@@ -1,0 +1,216 @@
+<tbody>
+							<!-----------Current User Project List------------->
+							<?
+							$project_current_user = select_query_json("select * from approval_project_master pm , approval_project_head ph  
+							where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+							ph.ADDUSER = ".$_SESSION['tcs_usrcode']." ORDER BY PM.PRMSCOD", "Centra", "TEST");
+							for($project_user = 0; $project_user < count($project_current_user); $project_user++) {
+									
+										?>
+										<tr>
+										<td><?echo ($project_user+1);?></td>
+										 <td><?echo $project_current_user[$project_user]['PRMSCOD'];?></td>
+											<!-- <th><input type="text" id="p_code_<?echo ($project_user+1);?>" value="<?echo $project_current_user[$project_user]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+											<td><?echo $project_current_user[$project_user]['PRJNAME'];?></td>
+											<td><?echo $project_current_user[$project_user]['BRNNAME'];?></td>
+											<!--<td><?echo $project_current_user[$project_user]['TOPCORE'];?></td>
+											<td><?echo $project_current_user[$project_user]['SUBCRNM'];?></td>
+											<td><?echo $project_current_user[$project_user]['TARNUMB'];?></td>
+											<td><?echo $project_current_user[$project_user]['TARNAME'];?></td>-->
+										<td><?if ($project_current_user[$project_user]['BRN_PRJ'] == 'P') {
+										  echo "NEW PROJECT";
+										}else {
+										  echo "BRANCH";
+										} ?>
+											</td>
+											 <td><?echo $project_current_user[$project_user]['BRNNAME']." / ".$project_current_user[$project_user]['TOPCORE']." / ".$project_current_user[$project_user]['SUBCRNM']." / ".$project_current_user[$project_user]['TARNUMB']." - ".$project_current_user[$project_user]['TARNAME']." / ".$project_current_user[$project_user]['PRJNAME']." / " .$project_current_user[$project_user]['PRMSCOD'];?></td>
+											 
+											<?
+											$view = select_query_json("select * from approval_project_heirarchy where prmscod = '".$project_current_user[$project_user]['PRMSCOD']."' and Appstat ='Y'","Centra","TEST");
+											//var_dump($view);
+											//if(count($view) == 1){
+											if($view[0]['APPSTAT'] == 'Y'){
+											?> 
+											<td class="text-center">
+											<a class='btn btn-info btn-sm' style="background-color: #397ce0;!important; border:none;"
+											 href="">
+											<span class="glyphicon glyphicon-retweet"></span> Processing...</a>
+
+											 </td>
+											 <?} else {?>
+											 <td class="text-center">
+											<a class='btn btn-info btn-sm'
+											 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $project_current_user[$project_user]['PRMSYER'];?>&id=<?echo $project_current_user[$project_user]['PRMSCOD'];?>">
+											<span class="glyphicon glyphicon-log-in"></span> View</a>
+
+											 </td>
+											 <?}?>
+											 </tr>
+											
+											<? 
+											}
+											
+											?>
+							
+							<!---------END--------->
+                              <?
+								if ($_SESSION['tcs_empsrno'] == 188)//188
+								{ //condition to check first stage of approval process
+							
+							 /* $sql_project = select_query_json("select * from approval_project_master pm , approval_project_head ph where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' ORDER BY PM.PRMSCOD", "Centra", 'TEST');*/ //ledger wise list
+							 
+							 // List Based on project code
+							 $sql_project = select_query_json("select distinct pm.PRMSYER, pm.PRMSCOD, pm.PRJNAME, pm.BRNNAME, ph.TOPCORE, ph.SUBCRNM, ph.TARNUMB,
+ ph.TARNAME, pm.BRN_PRJ, ph.PRMSYER, ph.PRMSCOD,ah.EMPSRNO from approval_project_master pm ,
+ approval_project_head ph ,approval_project_heirarchy ah where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4'
+  and ph.DELETED = 'N' and ph.PRMSCOD = ah.PRMSCOD and ah.EMPSRNO = '188' and ah.APPSTAT = 'N' ORDER BY pm.PRMSCOD","Centra","TEST");
+								
+      								for($project_i = 0; $project_i < count($sql_project); $project_i++) {
+										$row = 1;
+									?>
+								<tr>
+								<td><?echo ($project_i+1);?></td>
+								 <td><?echo $sql_project[$project_i]['PRMSCOD'];?></td>
+								<!-- <th><input type="text" id="p_code_<?echo ($project_i+1);?>" value="<?echo $sql_project[$project_i]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+								<td><?echo $sql_project[$project_i]['PRJNAME'];?></td>
+								<td><?echo $sql_project[$project_i]['BRNNAME'];?></td>
+								<!--<td><?echo $sql_project[$project_i]['TOPCORE'];?></td>
+								<td><?echo $sql_project[$project_i]['SUBCRNM'];?></td>
+								<td><?echo $sql_project[$project_i]['TARNUMB'];?></td>
+								<td><?echo $sql_project[$project_i]['TARNAME'];?></td>-->
+								<td><?if ($sql_project[$project_i]['BRN_PRJ'] == 'P') {
+								  echo "NEW PROJECT";
+								}else {
+								  echo "BRANCH";
+								} ?></td>
+								 <td><?echo $sql_project[$project_i]['BRNNAME']." / ".$sql_project[$project_i]['TOPCORE']." / ".$sql_project[$project_i]['SUBCRNM']." / ".$sql_project[$project_i]['TARNUMB']." - ".$sql_project[$project_i]['TARNAME']." / ".$sql_project[$project_i]['PRJNAME']." / " .$sql_project[$project_i]['PRMSCOD'];?></td>
+								 <td class="text-center">
+								 
+													<a class='btn btn-info btn-sm'
+								 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $sql_project[$project_i]['PRMSYER'];?>&id=<?echo $sql_project[$project_i]['PRMSCOD'];?>">
+													 <span class="glyphicon glyphicon-log-in"></span> View</a> 
+										<!--<a class="btn btn-info btn-sm"  data-toggle="modal" data-target="#basicExampleModal" id ="btnedit" data-id = "<?echo $sql_project[$project_i]['PRMSCOD'];?>" data-year = "<?echo $sql_project[$project_i]['PRMSYER'];?>" href="javascript:alert('Hello World!');"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit </a>	-->	 
+
+									</td>
+
+								  <!-- <a href="/approval-desk-test/admin_project_modify_prakash.php"> -->
+									</tr>
+										<?
+      												 }
+												}//condition to check first stage of approval process					
+											?>
+											
+											<?
+											 if ($_SESSION['tcs_empsrno'] == 61579){
+										/*$project_level_2 = select_query_json("select * from approval_project_master pm , approval_project_head ph , approval_project_heirarchy ah 
+										where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+										ah.APPSRNO ='1' and ah.APPSTAT in ('Y') and ah.PRMSCOD = pm.PRMSCOD ORDER BY PM.PRMSCOD", "Centra", "TEST");*/
+										 $project_level_2 = select_query_json("select distinct pm.PRMSYER, pm.PRMSCOD, pm.PRJNAME, pm.BRNNAME, ph.TOPCORE, ph.SUBCRNM, ph.TARNUMB,
+ ph.TARNAME, pm.BRN_PRJ, ph.PRMSYER, ph.PRMSCOD,ah.EMPSRNO from approval_project_master pm ,
+ approval_project_head ph ,approval_project_heirarchy ah where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4'
+  and ph.DELETED = 'N' and ph.PRMSCOD = ah.PRMSCOD and ah.EMPSRNO = '188' and ah.APPSTAT = 'Y' ORDER BY pm.PRMSCOD","Centra","TEST");
+								
+											for($project_L2 = 0; $project_L2 < count($project_level_2); $project_L2++) {
+													$row = 1;
+													?>
+												
+													<tr>
+													<td><?echo ($project_L2+1);?></td>
+													 <td><?echo $project_level_2[$project_L2]['PRMSCOD'];?></td>
+													<!-- <th><input type="text" id="p_code_<?echo ($project_L2+1);?>" value="<?echo $project_level_2[$project_L2]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+													<td><?echo $project_level_2[$project_L2]['PRJNAME'];?></td>
+													<td><?echo $project_level_2[$project_L2]['BRNNAME'];?></td>
+													<!--<td><?echo $project_level_2[$project_L2]['TOPCORE'];?></td>
+													<td><?echo $project_level_2[$project_L2]['SUBCRNM'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNUMB'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNAME'];?></td>-->
+													<td><?if ($project_level_2[$project_L2]['BRN_PRJ'] == 'P') {
+													  echo "NEW PROJECT";
+													}else {
+													  echo "BRANCH";
+													} ?></td>
+													 <td><?echo $project_level_2[$project_L2]['BRNNAME']." / ".$project_level_2[$project_L2]['TOPCORE']." / ".$project_level_2[$project_L2]['SUBCRNM']." / ".$project_level_2[$project_L2]['TARNUMB']." - ".$project_level_2[$project_L2]['TARNAME']." / ".$project_level_2[$project_L2]['PRJNAME']." / " .$project_level_2[$project_L2]['PRMSCOD'];?></td>
+													 <td class="text-center">
+													
+													<a class='btn btn-info btn-sm'
+													 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $project_level_2[$project_L2]['PRMSYER'];?>&id=<?echo $project_level_2[$project_L2]['PRMSCOD'];?>">
+													<span class="glyphicon glyphicon-log-in"></span> View</a>
+													 </td>
+													 </tr>
+													<? 
+													}
+											}
+											?>
+											<?
+											if ($_SESSION['tcs_empsrno'] == 452 ){
+										$project_level_2 = select_query_json("select * from approval_project_master pm , approval_project_head ph , approval_project_heirarchy ah 
+										where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+										ah.APPSRNO ='2' and ah.APPSTAT ='Y' and ah.PRMSCOD = pm.PRMSCOD ORDER BY PM.PRMSCOD", "Centra", "TEST");
+											for($project_L2 = 0; $project_L2 < count($project_level_2); $project_L2++) {
+													$row = 1;
+													?>
+													<tr>
+													<td><?echo ($project_L2+1);?></td>
+													 <td><?echo $project_level_2[$project_L2]['PRMSCOD'];?></td>
+													<!-- <th><input type="text" id="p_code_<?echo ($project_L2+1);?>" value="<?echo $project_level_2[$project_L2]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+													<td><?echo $project_level_2[$project_L2]['PRJNAME'];?></td>
+													<td><?echo $project_level_2[$project_L2]['BRNNAME'];?></td>
+													<!--<td><?echo $project_level_2[$project_L2]['TOPCORE'];?></td>
+													<td><?echo $project_level_2[$project_L2]['SUBCRNM'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNUMB'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNAME'];?></td>-->
+													<td><?if ($project_level_2[$project_L2]['BRN_PRJ'] == 'P') {
+													  echo "NEW PROJECT";
+													}else {
+													  echo "BRANCH";
+													} ?></td>
+													 <td><?echo $project_level_2[$project_L2]['BRNNAME']." / ".$project_level_2[$project_L2]['TOPCORE']." / ".$project_level_2[$project_L2]['SUBCRNM']." / ".$project_level_2[$project_L2]['TARNUMB']." - ".$project_level_2[$project_L2]['TARNAME']." / ".$project_level_2[$project_L2]['PRJNAME']." / " .$project_level_2[$project_L2]['PRMSCOD'];?></td>
+													 <td class="text-center">
+													 
+													<a class='btn btn-info btn-sm'
+													 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $project_level_2[$project_L2]['PRMSYER'];?>&id=<?echo $project_level_2[$project_L2]['PRMSCOD'];?>">
+													<span class="glyphicon glyphicon-log-in"></span> View</a>
+
+													 </td>
+													 </tr>
+													<? 
+													}
+											}
+											?>
+											<?
+											if ($_SESSION['tcs_empsrno'] == 3 ){
+										$project_level_2 = select_query_json("select * from approval_project_master pm , approval_project_head ph , approval_project_heirarchy ah 
+										where pm.PRMSYER = ph.PRMSYER and pm.PRMSCOD = ph.PRMSCOD and PRJTITL = '4' and ph.DELETED = 'N' and
+										ah.APPSRNO ='3' and ah.APPSTAT ='Y' and ah.PRMSCOD = pm.PRMSCOD ORDER BY PM.PRMSCOD", "Centra", "TEST");
+											for($project_L2 = 0; $project_L2 < count($project_level_2); $project_L2++) {
+													$row = 1;
+													?>
+													<tr>
+													<td><?echo ($project_L2+1);?></td>
+													 <td><?echo $project_level_2[$project_L2]['PRMSCOD'];?></td>
+													<!-- <th><input type="text" id="p_code_<?echo ($project_L2+1);?>" value="<?echo $project_level_2[$project_L2]['PRMSCOD'];?>" disabled style="background:#fff;border:none"></th> -->
+													<td><?echo $project_level_2[$project_L2]['PRJNAME'];?></td>
+													<td><?echo $project_level_2[$project_L2]['BRNNAME'];?></td>
+													<!--<td><?echo $project_level_2[$project_L2]['TOPCORE'];?></td>
+													<td><?echo $project_level_2[$project_L2]['SUBCRNM'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNUMB'];?></td>
+													<td><?echo $project_level_2[$project_L2]['TARNAME'];?></td>-->
+													<td><?if ($project_level_2[$project_L2]['BRN_PRJ'] == 'P') {
+													  echo "NEW PROJECT";
+													}else {
+													  echo "BRANCH";
+													} ?></td>
+													 <td><?echo $project_level_2[$project_L2]['BRNNAME']." / ".$project_level_2[$project_L2]['TOPCORE']." / ".$project_level_2[$project_L2]['SUBCRNM']." / ".$project_level_2[$project_L2]['TARNUMB']." - ".$project_level_2[$project_L2]['TARNAME']." / ".$project_level_2[$project_L2]['PRJNAME']." / " .$project_level_2[$project_L2]['PRMSCOD'];?></td>
+													 <td class="text-center">
+													 
+													<a class='btn btn-info btn-sm'
+													 href="/approval-desk-test/admin_project_modify_prakash.php?c_year=<?echo $project_level_2[$project_L2]['PRMSYER'];?>&id=<?echo $project_level_2[$project_L2]['PRMSCOD'];?>">
+													<span class="glyphicon glyphicon-log-in"></span> View</a>
+
+													 </td>
+													 </tr>
+													<? 
+													}
+												}
+											?>		
+									</tbody>

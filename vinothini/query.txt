@@ -1,0 +1,39 @@
+select brn.brnname branch,ehead.empcode||'-'||ehead.empname hname,emp.empcode||'-'||emp.empname ename,
+max(decode(to_char(gfix.adddate,'dd'),'01',gfix.empgrad,'-')) D01,max(decode(to_char(gfix.adddate,'dd'),'02',gfix.empgrad,'-')) D02,max(decode(to_char(gfix.adddate,'dd'),'03',gfix.empgrad,'-')) D03,
+max(decode(to_char(gfix.adddate,'dd'),'04',gfix.empgrad,'-')) D04,max(decode(to_char(gfix.adddate,'dd'),'05',gfix.empgrad,'-')) D05,max(decode(to_char(gfix.adddate,'dd'),'06',gfix.empgrad,'-')) D06,
+max(decode(to_char(gfix.adddate,'dd'),'07',gfix.empgrad,'-')) D07,max(decode(to_char(gfix.adddate,'dd'),'08',gfix.empgrad,'-')) D08,max(decode(to_char(gfix.adddate,'dd'),'09',gfix.empgrad,'-')) D09,
+max(decode(to_char(gfix.adddate,'dd'),'10',gfix.empgrad,'-')) D10,max(decode(to_char(gfix.adddate,'dd'),'11',gfix.empgrad,'-')) D11,max(decode(to_char(gfix.adddate,'dd'),'12',gfix.empgrad,'-')) D12,
+max(decode(to_char(gfix.adddate,'dd'),'13',gfix.empgrad,'-')) D13,max(decode(to_char(gfix.adddate,'dd'),'14',gfix.empgrad,'-')) D14,max(decode(to_char(gfix.adddate,'dd'),'15',gfix.empgrad,'-')) D15,
+max(decode(to_char(gfix.adddate,'dd'),'16',gfix.empgrad,'-')) D16,max(decode(to_char(gfix.adddate,'dd'),'17',gfix.empgrad,'-')) D17,max(decode(to_char(gfix.adddate,'dd'),'18',gfix.empgrad,'-')) D18,
+max(decode(to_char(gfix.adddate,'dd'),'19',gfix.empgrad,'-')) D19,max(decode(to_char(gfix.adddate,'dd'),'20',gfix.empgrad,'-')) D20,max(decode(to_char(gfix.adddate,'dd'),'21',gfix.empgrad,'-')) D21,
+max(decode(to_char(gfix.adddate,'dd'),'22',gfix.empgrad,'-')) D22,max(decode(to_char(gfix.adddate,'dd'),'23',gfix.empgrad,'-')) D23,max(decode(to_char(gfix.adddate,'dd'),'24',gfix.empgrad,'-')) D24,
+max(decode(to_char(gfix.adddate,'dd'),'25',gfix.empgrad,'-')) D25,max(decode(to_char(gfix.adddate,'dd'),'26',gfix.empgrad,'-')) D26,max(decode(to_char(gfix.adddate,'dd'),'27',gfix.empgrad,'-')) D27,
+max(decode(to_char(gfix.adddate,'dd'),'28',gfix.empgrad,'-')) D28,max(decode(to_char(gfix.adddate,'dd'),'29',gfix.empgrad,'-')) D29,max(decode(to_char(gfix.adddate,'dd'),'30',gfix.empgrad,'-')) D30,
+max(decode(to_char(gfix.adddate,'dd'),'31',gfix.empgrad,'-')) D31,
+sum(decode(gfix.empgrad,'A+',1,0)) Aplus_grade ,sum(decode(gfix.empgrad,'A',1,0)) A_grade ,sum(decode(gfix.empgrad,'B',1,0)) B_grade ,sum(decode(gfix.empgrad,'C',1,0)) C_grade ,count(*) total_
+from employee_grade_fix gfix,employee_office emp,employee_office ehead,branch brn
+where gfix.empsrno=emp.empsrno and gfix.emphdsr=ehead.empsrno and emp.brncode=brn.brncode and gfix.deleted='N' and to_char(gfix.adddate,'MMyyyy')='102018'
+group by brn.brnname,ehead.empcode||'-'||ehead.empname ,emp.empcode||'-'||emp.empname ,ehead.empcode 
+order by ehead.empcode;
+
+
+select brn.brnname branch from employee_grade_fix gfix,employee_office emp,employee_office ehead,branch brn
+where gfix.empsrno=emp.empsrno and gfix.emphdsr=ehead.empsrno and emp.brncode=brn.brncode and gfix.deleted='N' and to_char(gfix.adddate,'MMyyyy')='102018'
+group by brn.brnname,ehead.empcode||'-'||ehead.empname ,emp.empcode||'-'||emp.empname ,ehead.empcode 
+order by ehead.empcode;
+
+query
+
+
+
+
+
+ $('#datepicker-example3').Zebra_DatePicker({
+                 format: 'M-Y',
+                 direction: [1, -365],
+            });
+
+        $('#datepicker-example31').Zebra_DatePicker({
+            direction:false, // 1,
+            format: 'M-Y',
+         pair: $('#datepicker-example4')

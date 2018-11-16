@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <!-- META SECTION -->
+    <title> Request Entry :: Approval Desk :: </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    <?  $theme_view = "css/theme-default.css";
+        if(isset($_COOKIE['assign_theme'])) { $theme_view = $_COOKIE['assign_theme']; } ?>
+    <link rel="stylesheet" type="text/css" id="theme" href="<?=$theme_view?>"/>
+    <!-- EOF CSS INCLUDE -->
+    <link href="css/jquery-customselect.css" rel="stylesheet" />
+    <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+    <link href="css/monthpicker.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.min.css" />
+    <!-- multiple file upload -->
+    <link href="css/jquery.filer.css" rel="stylesheet">
+    <script src="js/angular.js"></script>
+</head>
+
+    <body>
+	
+            <center> <table border="5"></center>
+			<thead>
+			<form>
+			<tr><th colspan="2"><center><img src="images/logo-.png" alt="The Chennai Silks - Logo"/></center>
+                         <center><font size="5px">POLICY-APPROVAL</font></center>
+						 </th></tr>			 			 
+								<tr>
+									<th colspan="2" style="white-space: nowrap; border: 1px solid #e0e0e0; background-color: #f0f0f0;line-height: 25px; color:#000;text-align:left;"> SUBJECT  : <span class="blue_highlight"><?echo $sectionrow['APLCYNM'];?></span></th>
+								</tr>
+							</thead>
+							  <tbody >
+                       <tr>
+                          <td>
+					        <div class="panel panel-default">
+					           <div class="input-group">
+			                     <span class="time">EFFECTIVE DATE  :</span>
+			                    <input type="text" style="cursor: pointer; text-transform: uppercase; position: relative; top: auto; right: auto; bottom: auto; left: auto;" class="form-control" name="search_fromdate" id="datepicker-example3" autocomplete="off" readonly="readonly" maxlength="11" tabindex="5" value="27-Jul-2018" data-toggle="tooltip" data-placement="top" placeholder="From Date" title="">
+			                   
+								
+								<?  $and = "";
+								 if($search_fromdate != '' or $search_todate != '') {
+                                    if($search_fromdate == '') { $search_fromdate = date("d-M-Y"); }
+                                    $exp1 = explode("-", $search_fromdate);
+                                    $frm_date = strtoupper($exp1[0]."-".$exp1[1]."-".substr($exp1[2], 2));
+									
+                                     ?>
+				               </div>  
+				      </div></td>
+		                <td>
+						   <div class="input-group">
+			                 <span class="time">POLICY TYPE  :</span>
+                                <select name="field4" class="field-select">
+                                 <option value="ORIGINAL">ORIGINAL</option>
+                                  <option value="RENEWAL">RENEWAL</option>
+                         </select>			                    
+		              </div>
+			       </td>
+		         </tr>
+		             <tr>
+		               <td><div class="input-group">
+			                  <span class="time">VALID UPTO  :</span>
+			                    <input type='text' style="cursor:pointer; text-transform:uppercase" type="text" class="form-control" name="search_todate" id="datepicker-example4" autocomplete="off" readonly maxlength="11" tabindex='6' value='' data-toggle="tooltip" data-placement="top" placeholder='To Date' title="">
+		                       <?  $and = "";
+								 if($search_fromdate != '' or $search_todate != '') {
+                                    if($search_fromdate == '') { $search_fromdate = date("d-M-Y"); }
+                                    $exp1 = explode("-", $search_fromdate);
+                                    $frm_date = strtoupper($exp1[0]."-".$exp1[1]."-".substr($exp1[2], 2));
+									
+                                     ?>
+		                      </div>
+			               </td>
+		                      <td>
+			                    <div class="input-group">
+			                       <span class="time">CREATOR EC NO \ NAME  :</span>
+			                       
+				<select <? if($_SESSION['tcs_empsrno'] != '452') { ?>class="form-control custom-select chosn"<? } else { ?>class="form-control"<? } ?> tabindex='27' name='slt_intermediate_team' id='slt_intermediate_team' data-toggle="tooltip" style="width: 100%; vertical-align: top;" data-placement="top" title="Intermediate Team" onchange='call_iv()' onblur='call_iv()'>
+					<option value=''>-- Select User --</option>
+					<? 	for($sql_inteam_i = 0; $sql_inteam_i < count($sql_inteam); $sql_inteam_i++) {
+							if($sql_inteam[$sql_inteam_i]['EMPCODE'] != 1 and $sql_inteam[$sql_inteam_i]['EMPCODE'] != 2) { ?>
+								<option value='<?=$sql_inteam[$sql_inteam_i]['EMPCODE']?>'><?=$sql_inteam[$sql_inteam_i]['EMPNAME']." - ".$sql_inteam[$sql_inteam_i]['EMPCODE'].""?></option>
+					<? 		}
+						} ?>
+				</select>
+			<? // } ?>
+                               </div>
+		                    </td>
+		                </tr>
+		                   <tr>
+		                       <td>
+		                         <div class="input-group">
+			                        <span class="time">APPROVAL DATE  :</span>
+			                          <input type="text" style="cursor: pointer; text-transform: uppercase; position: relative; top: auto; right: auto; bottom: auto; left: auto;" class="form-control" name="search_fromdate" id="datepicker-example5" autocomplete="off" readonly="readonly" maxlength="11" tabindex="5" value="27-Jul-2018" data-toggle="tooltip" data-placement="top" placeholder="From Date" title=""  >
+		                        <?  $and = "";
+								 if($search_fromdate != '' or $search_todate != '') {
+                                    if($search_fromdate == '') { $search_fromdate = date("d-M-Y"); }
+                                    $exp1 = explode("-", $search_fromdate);
+                                    $frm_date = strtoupper($exp1[0]."-".$exp1[1]."-".substr($exp1[2], 2));
+									
+                                     ?>
+							</div>
+		                 </div>
+		               </td>
+		                  <td>
+		                    <div class="input-group">
+			                  <span class="time">CO-ORDINATOR EC NO \ NAME  :</span>
+			                   <select <? if($_SESSION['tcs_empsrno'] != '452') { ?>class="form-control custom-select chosn"<? } else { ?>class="form-control"<? } ?> tabindex='27' name='slt_intermediate_team' id='slt_intermediate_team' data-toggle="tooltip" style="width: 100%; vertical-align: top;" data-placement="top" title="Intermediate Team" onchange='call_iv()' onblur='call_iv()'>
+					<option value=''>-- Select  Name</option>
+					<? 	for($sql_inteam_i = 0; $sql_inteam_i < count($sql_inteam); $sql_inteam_i++) {
+							if($sql_inteam[$sql_inteam_i]['EMPCODE'] != 1 and $sql_inteam[$sql_inteam_i]['EMPCODE'] != 2) { ?>
+								<option value='<?=$sql_inteam[$sql_inteam_i]['EMPCODE']?>'><?=$sql_inteam[$sql_inteam_i]['EMPNAME']." - ".$sql_inteam[$sql_inteam_i]['EMPCODE'].""?></option>
+					<? 		}
+						} ?>
+				</select>
+		                    </div>
+		                </td>
+		              </tr>
+		                  <tr>
+		                    <td >
+		                      <div class="input-group">
+			                     <span class="time">USERLIST  :</span>												
+					 <? $sql_inteam = select_query_json("select distinct emp.EMPNAME , emp.EMPCODE, substr(brn.NICNAME,3,10) brnname, des.DESNAME, SUBSTR(sec.esename, 4, 100) esename,
+															from employee_office emp, branch brn, designation des, empsection sec
+															where emp.brncode = brn.brncode and emp.descode = des.descode and emp.ESECODE = sec.ESECODE 
+																and emp.empsrno = ".$sql_reqid[0]['REQSTFR']." and emp.brncode in (1,10,14,23,30,31,32,888,102,104,107,112,113,114,116,118,120,121,100)
+															order by  EMPNAME Asc", 'Centra', 'TCS');
+?>
+					  <select  class="form-control select" name='slt_appflow_users[]' id="slt_appflow_users"  data-toggle="tooltip" style="width:900px; margin-top: 5px; vertical-align: top;" data-placement="top" title="Approval flow Users" >
+								<? 	for($sql_inteam_i = 0; $sql_inteam_i < count($sql_inteam); $sql_inteam_i++) { ?>
+									<option value='<?=$sql_inteam[$sql_inteam_i]['EMPCODE']?>'><?=str_replace(",", "", $sql_inteam[$sql_inteam_i]['EMPNAME'])." - ".$sql_inteam[$sql_inteam_i]['EMPCODE']." - ".str_replace(",", "", $sql_inteam[$sql_inteam_i]['DESNAME'])." - ".str_replace(",", "", $sql_inteam[$sql_inteam_i]['BRNNAME'])." - ".str_replace(",", "", $sql_inteam[$sql_inteam_i]['ESENAME']).""?></option>
+								<? } ?>
+							</select>
+					 
+		                  </div>
+		                </td>
+			                <td>
+		                      <div class="input-group">
+			                     <span class="time">ASSIST BY EC NO \ NAME  :</span>
+								 <? $sql_inteam = select_query_json("select * from trandata.employee_office@tcscentr  order by EMPCODE", "Centra", 'TCS'); ?>
+			                          <select <? if($_SESSION['tcs_empsrno'] != '452') { ?>class="form-control custom-select chosn"<? } else { ?>class="form-control"<? } ?> tabindex='27' name='slt_intermediate_team' id='slt_intermediate_team' data-toggle="tooltip" style="width: 100%; vertical-align: top;" data-placement="top" '>
+					<option value=''>-- Select User --</option>
+					<? 	for($sql_inteam_i = 0; $sql_inteam_i < count($sql_inteam); $sql_inteam_i++) {
+							if($sql_inteam[$sql_inteam_i]['EMPCODE'] != 1 and $sql_inteam[$sql_inteam_i]['EMPCODE'] != 2) { ?>
+								<option value='<?=$sql_inteam[$sql_inteam_i]['EMPCODE']?>'><?=$sql_inteam[$sql_inteam_i]['EMPNAME']." - ".$sql_inteam[$sql_inteam_i]['EMPCODE'].""?></option>
+					<? 		}
+						} ?>
+				</select>
+		                         </div>
+		                      </td>
+		                    </tr>
+		                         <tr>
+       								 <td colspan="2">
+		                                <div class="input-group">
+			                               <span class="time" >DESK PROCEDURE  :</span>
+			                                <input type="file" name="slt_appflow" placeholder="need to attach">    
+		                              </div>
+		                          </td>
+			                   </tr>
+			                      <tr>
+       								 <td colspan="2">
+		                                <div class="input-group">
+			                               <span class="time" >MAITENANCE OF POLICY  :</span>
+			                                  <input type="text" name="slt_appflow">   
+		                              </div>
+		                           </td>
+			                     </tr>
+			                  <tr>
+			                     <td colspan="4">
+			                       <div class="col-md-6"> 
+                                        <div class="tags_clear"></div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" style="text-align: left;">POLICY <span style='color:red'>*</span> : </label>
+                                            <div class="tags_clear height10px"></div>
+                                            <div class="col-md-12">
+                                                
+                                               
+                                                        <input type="hidden" name="hid_apprsub" id='hid_apprsub' value="<?=$sql_reqid[0]['APPRSUB']?>" onblur="find_tags();">
+                                                        <textarea name="FCKeditor1" id="FCKeditor1" tabindex='14'>
+                                                            <?  if($_REQUEST['action'] == 'edit') {
+                                                                    if($sql_reqid[0]['APPRFOR'] == '1') {
+                                                                        $filepathname = $sql_reqid[0]['APPRSUB'];
+                                                                        $filename = "ftp://".$ftp_user_name_apdsk.":".$ftp_user_pass_apdsk."@".$ftp_server_apdsk.":5022/approval_desk/text_approval_source/".$filepathname;
+                                                                        $handle = fopen($filename, "r") or die("The content might not be available!. Contact Admin - ". $sql_reqid[0]['APPRSUB']);
+                                                                        $contents = fread($handle, filesize($filename));
+                                                                        fclose($handle);
+                                                                        echo $contents;
+                                                                    } else {
+                                                                        echo ": ".$sql_reqid[0]['APPRDET'];
+                                                                    }
+                                                                }?>
+                                                            
+                                                        </textarea>
+                                                        <script type="text/javascript">
+                                                        var ckedit=CKEDITOR.replace("FCKeditor1",
+                                                        {
+                                                            height:"450", width:"100%",
+                                                            filebrowserBrowseUrl : '/ckeditor/ckfinder/ckfinder.html',
+                                                            filebrowserImageBrowseUrl : '/ckeditor/ckfinder/ckfinder.html?Type=Images',
+                                                            filebrowserUploadUrl : '/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                                                            filebrowserImageUploadUrl : '/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'
+                                                        });
+                                                        </script>
+                                                <? } ?>
+                                            </div>
+                                        </div>
+                                     </td>
+                                 </tr>
+		                                              </form>
+		                                          </tbody>
+                                              </table>
+                          <? include "lib/app_footer.php"; ?>
+<!-- START SCRIPTS -->
+    <!-- START PLUGINS -->
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- END PLUGINS -->
+
+    <!-- START THIS PAGE PLUGINS-->
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+    <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+    <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/tableExport.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jquery.base64.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/html2canvas.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/libs/sprintf.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/jspdf.js"></script>
+    <script type="text/javascript" src="js/plugins/tableexport/jspdf/libs/base64.js"></script>
+    <script type="text/javascript" src="js/zebra_datepicker.js"></script>
+    <!-- END THIS PAGE PLUGINS-->
+
+    <!-- START TEMPLATE -->
+    <script type="text/javascript" src="js/settings.js"></script>
+
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+
+    <script type="text/javascript" src="js/demo_dashboard.js"></script>
+    <!-- Select2 -->
+    <script src="../dist/newlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <!-- END TEMPLATE -->
+
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<link href="css/fSelect.css" rel="stylesheet">
+    <script src="js/fSelect.js"></script>
+    <script type="text/javascript">
+	$('#slt_appflow_users').fSelect();
+
+	function reject_reason(iv) {
+		var aa = document.getElementById("chk_reject_reason_"+iv).checked;
+		var cnt = $('input.common_style:checked').length;
+		if(cnt >= 1) {
+			if(aa == false) {
+				$("#hid_reason_reject_"+iv).val("");
+				$("#hid_reason_reject_"+iv).attr("required", true);
+				$("#id_reason_reject_"+iv).css('display', 'block');
+			} else {                            
+				$("#hid_reason_reject_"+iv).val("");
+				$("#hid_reason_reject_"+iv).attr("required", false);
+				$("#id_reason_reject_"+iv).css('display', 'none');
+			}
+		} else {
+			alert("Atleast one Product must need to proceed further. Or kindly reject this approval!!");
+			$("#chk_reject_reason_"+iv).prop('checked', true);
+		}
+	}
+   
+		$(document).ready(function() {
+        $("#load_page").fadeOut("slow");
+        $(".finish_confirm").click( function() {
+        });
+    });
+
+    $(document).keypress(function(e) {
+        if (e.keyCode == 27) {
+            $("#myModal1").fadeOut(500);
+        }
+    });
+
+    $('#datepicker-example3').Zebra_DatePicker({
+      direction: false, // 1,
+      format: 'd-M-Y',
+      pair: $('#datepicker-example4')
+    });
+
+    $('#datepicker-example4').Zebra_DatePicker({
+      direction: [1, '<?=date("d-M-Y")?>'], // ['<?=date("d-M-Y")?>', 0], // 0,
+      format: 'd-M-Y'
+    });
+	$('#datepicker-example5').Zebra_DatePicker({
+      direction: false, // 1,
+      format: 'd-M-Y',
+      pair: $('#datepicker-example4')
+    });
+	</script>										
+
+      </body>
+</html> 

@@ -1,0 +1,49 @@
+<!--<li class="list-group-item">New:<?echo $table_history[$hlist]['TARNAME'];?> and Value is<?echo $table_history[$hlist]['PRJVALU'];?><span class="badge badge-success">edited by </br><? echo $table_history[$hlist]['EDTUSER'];?></span></li>
+
+
+
+/*
+		$steam = array();
+		$j = 0;
+		for($i = 0; $i < 8 ;$i=i+2)
+		{
+		$steam[i] = $APPROVE[j];
+		//print_r ($steam[0]);
+		$steam[i] = $APPROVE[j]['EMPSRNO'];
+		$i++;
+		$steam[i] = $APPROVE[j]['EMPNAME'];
+		$j++;
+		
+		echo $steam[0];
+		echo $steam[1];
+		}
+		$cost = array();
+		$cost[1] =  $APPROVE[1];
+		$cost[1] = $APPROVE[1]['EMPSRNO'];
+		$cost[1] = $APPROVE[1]['EMPNAME'];
+		print_r ($cost[1]);
+		echo $cost[1]['EMPSRNO'];
+		echo $cost[1]['EMPNAME'];
+		$admin = array();
+		$admin[2] = $APPROVE[2];
+		//print_r ($admin[2]);
+		$md = array();
+		$md[3] =  $APPROVE[1];
+		//print_r ($md[3]);
+		
+		
+		$steam = array();
+		$i =0;
+		$j =0;
+		foreach($tmp as $APPROVE )
+		{
+				$steam[i][j] = $tmp['EMPSRNO'];
+				j++;
+				$steam [i][j] = $tmp['EMPNAME'];
+				i++;
+				j=0;
+		
+		}
+		echo $steam[0];
+		
+		*/

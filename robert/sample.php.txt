@@ -1,0 +1,2 @@
+select distinct emp.EMPCODE,emp.EMPNAME
+     from approval_salary_policy app,employee_office emp where emp.EMPCODE=app.USELIST;

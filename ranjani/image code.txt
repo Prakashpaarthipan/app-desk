@@ -1,0 +1,14 @@
+	<div style='clear:both'>&nbsp;</div>
+	<div class="row">
+		<div class="col-md-12" style="text-align: center;">
+			<input type="file" name="fle_StyleRefImage[]" id="fle_StyleRefImage" data-toggle="tooltip" accept="image/jpg,image/jpeg,image/png,image/jpg" class="form-control" data-placement="left" data-toggle="tooltip" data-placement="top" title="Style Reference Image" placeholder="Style Reference Image" style="height: 25px;">
+
+			<? $sql_style_lists = select_query_json("select DESKPRO from APPROVAL_SALARY 
+															where APRNUMB='".$aprnumb."'", "Centra", "TEST"); 
+			$vsbl = 0;
+			if(count($sql_style_lists) > 0) { $vsbl++; ?>
+				<img src="uploads/request_entry/attachments/<?=$sql_style_lists[0]['DESKPRO']?>" style="border: 0px; width: 100px; height: 100px;">
+			<? } ?>
+		</div>
+	</div>
+	<div style='clear:both'>&nbsp;</div>

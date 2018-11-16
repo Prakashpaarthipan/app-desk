@@ -1,0 +1,7 @@
+update trandata.approval_request@tcscentr set deleted='Y' where  aprnumb='ADMIN / HR DEPT 4008726 / 27-10-2018 / 8726 / 05:15 PM' and arqsrno='6';
+update trandata.approval_request@tcscentr set appstat='N' where  aprnumb='ADMIN / HR DEPT 4008726 / 27-10-2018 / 8726 / 05:15 PM' and arqsrno='5';
+
+
+
+update trandata.approval_request@tcscentr set deleted='Y' where  aprnumb='ADMIN / HR DEPT 4008729 / 27-10-2018 / 8729 / 05:45 PM' and arqsrno='6';
+update trandata.approval_request@tcscentr set appstat='N' where  aprnumb='ADMIN / HR DEPT 4008729 / 27-10-2018 / 8729 / 05:45 PM' and arqsrno='5';

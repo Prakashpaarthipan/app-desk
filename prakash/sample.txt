@@ -1,0 +1,36 @@
+/*
+
+				var formElement = document.getElementById("frm_project_modify");
+				var formData = new FormData(formElement);
+				$.ajax({
+					type: "POST",
+					data: formData,
+					url:  "ajax/ajax_supplier_details.php?action=po_edit_update",
+					contentType: false,
+					processData: false,
+					success: function(data){
+						if(data == 1) {
+							//$("#submit_action").val(1);
+							//$( "#frm_po_detail" ).submit();
+							//return true;
+							var ALERT_TITLE = "Message";
+							var ALERTMSG = "PO entry updated success!!!";
+							createCustomAlert(ALERTMSG, ALERT_TITLE);
+							return false;
+						}else if(data==0){
+							var ALERT_TITLE = "Message";
+							var ALERTMSG = "Insert Failed. Kindly try again!!!";
+							createCustomAlert(ALERTMSG, ALERT_TITLE);
+							return false;
+						}else{
+							$('#modal-default').modal('toggle');
+							var ALERT_TITLE = "Message";
+							var ALERTMSG = "PO entry updated success!!!";
+							createCustomAlert(ALERTMSG, ALERT_TITLE);
+							return false;
+							
+						}
+					},
+					error: function(){}
+				});
+				*/

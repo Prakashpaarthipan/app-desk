@@ -1,0 +1,5 @@
+http://www.techoism.com/send-email-using-php-script-with-amazon-smtp-authentication/
+
+https://easymail7.com/tutorials/use-amazon-ses-smtp/
+
+https://stackoverflow.com/questions/28810164/how-to-send-mail-through-php-mail-on-amazon-ses-service

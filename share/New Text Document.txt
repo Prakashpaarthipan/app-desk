@@ -1,0 +1,17 @@
+select resfusr,count(*) CLOSED, 
+(select count(*) from trandata.service_response@tcscentr where resstat='A' and resfusr = ser.resfusr) ASSGND, 
+(select count(*) from trandata.service_response@tcscentr where resstat='N' and resfusr = ser.resfusr) NOT_ASGND, 
+(select empname from trandata.employee_office@tcscentr eof where eof.empsrno=ser.resfusr) NAME from trandata.service_response@tcscentr ser 
+where resstat='C' And trunc(resdate) between TO_DATE('15-SEP-18', 'DD-MON-YY') and TO_DATE('15-SEP-18', 'DD-MON-YY') group by resfusr ;
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+select COUNT(*) REQ from trandata.service_request@tcscentr where trunc(reqdate) between TO_DATE('14-SEP-18', 'DD-MON-YY') and TO_DATE('14-SEP-18', 'DD-MON-YY') and requsrtyp='S'
+union
+select COUNT(*) from trandata.service_request@tcscentr where trunc(reqdate) between TO_DATE('14-SEP-18', 'DD-MON-YY') and TO_DATE('14-SEP-18', 'DD-MON-YY') and requsrtyp='E'; 
+
+
+select USRNAME,COUNT(*) USRREQ from trandata.service_request@tcscentr SER,TRANDATA.USERID@TCSCENTR USR 
+where SER.ADDUSER=USR.USRCODE AND trunc(SER.reqdate) between TO_DATE('14-SEP-18', 'DD-MON-YY') and TO_DATE('14-SEP-18', 'DD-MON-YY') and SER.requsrtyp='E' GROUP BY USRNAME;

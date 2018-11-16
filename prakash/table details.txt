@@ -1,0 +1,97 @@
+approval_project_master
+ 
+Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PRMSYER                                               NOT NULL VARCHAR2(10)
+ PRMSCOD                                               NOT NULL VARCHAR2(10)
+ BRN_PRJ                                               NOT NULL VARCHAR2(10)
+ PRJCODE                                               NOT NULL VARCHAR2(10)
+ PRJNAME                                               NOT NULL VARCHAR2(10)
+ BRNCODE                                               NOT NULL NUMBER(3)
+ BRNNAME                                               NOT NULL VARCHAR2(10)
+ IMPDATE                                               NOT NULL DATE
+ DUEDATE                                               NOT NULL DATE
+ ADDUSER                                               NOT NULL NUMBER(7)
+ ADDDATE                                               NOT NULL DATE
+ DELETED                                               NOT NULL VARCHAR2(10)
+ PRJSTAT                                               NOT NULL VARCHAR2(10)
+ EDTUSER                                               NOT NULL NUMBER(7)
+ EDTDATE                                               NOT NULL DATE
+
+
+
+approval_project_attachment
+
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PRMSYER                                               NOT NULL VARCHAR2(10)
+ PRMSCOD                                               NOT NULL VARCHAR2(10)
+ FILESNO                                               NOT NULL VARCHAR2(10)
+ FILENAM                                               NOT NULL VARCHAR2(10)
+ DELETED                                               NOT NULL VARCHAR2(10)
+ ADDUSER                                               NOT NULL NUMBER(7)
+ ADDDATE                                               NOT NULL DATE
+
+
+
+approval_project_heirarchy
+
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PRMSCOD                                               NOT NULL VARCHAR2(10)
+ PRJHYCD                                               NOT NULL VARCHAR2(10)
+ EMPSRNO                                               NOT NULL VARCHAR2(10)
+ EMPCODE                                               NOT NULL VARCHAR2(10)
+ EMPNAME                                               NOT NULL VARCHAR2(10)
+ APPSRNO                                               NOT NULL NUMBER(3)
+ APPSTAT                                               NOT NULL VARCHAR2(10)
+ APPUSER					       NOT NULL NUMBER(7)
+ APPDATE                                               NOT NULL DATE
+ APPSYSIP                                              NOT NULL VARCHAR2(10)
+ APPSYSNM                                              NOT NULL VARCHAR2(10)
+
+
+
+approval_project_head
+
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PRMSYER                                               NOT NULL VARCHAR2(10)
+ PRMSCOD                                               NOT NULL VARCHAR2(10)
+ PRJSRNO                                               NOT NULL VARCHAR2(10)
+ PRJTITL                                               NOT NULL VARCHAR2(10)
+ EMPSRNO                                               NOT NULL VARCHAR2(10)
+ EMPCODE                                               NOT NULL VARCHAR2(10)
+ EMPNAME                                               NOT NULL VARCHAR2(10)
+ TARNUMB                                               NOT NULL VARCHAR2(10)
+ TARNAME                                               NOT NULL VARCHAR2(10)
+ PRJVALU                                               NOT NULL VARCHAR2(10)
+ ATCCODE                                               NOT NULL VARCHAR2(25)
+ TOPCORE                                               NOT NULL NUMBER(3)
+ SUBCORE                                               NOT NULL NUMBER(3)
+ SUBCRNM                                               NOT NULL VARCHAR2(10)
+ ADDUSER                                               NOT NULL NUMBER(7)
+ ADDDATE                                               NOT NULL DATE
+ DELETED                                               NOT NULL VARCHAR2(1)
+ EDTUSER                                               NOT NULL NUMBER(7)
+ EDTDATE                                               NOT NULL DATE
+
+
+
+approval_project_history
+
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PRMSYER                                               NOT NULL VARCHAR2(10)
+ PRMSCOD                                               NOT NULL VARCHAR2(10)
+ HISSRNO                                               NOT NULL VARCHAR2(10)
+ PRJSRNO                                               NOT NULL VARCHAR2(10)
+ PRJTITL                                               NOT NULL VARCHAR2(10)
+ TARNAME                                               NOT NULL VARCHAR2(10)
+ TARNUMB                                               NOT NULL VARCHAR2(10)
+ PRJVALU                                               NOT NULL VARCHAR2(10)
+ EDTUSER                                               NOT NULL NUMBER(7)
+ EDTDATE                                               NOT NULL DATE
+ HSTATUS                                               NOT NULL VARCHAR2(10)
+ PSTATUS                                               NOT NULL VARCHAR2(10)
+ REMARKS                                               NOT NULL VARCHAR2(10)

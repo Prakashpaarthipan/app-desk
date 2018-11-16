@@ -1,0 +1,79 @@
+	function hasDupesInHead(fieldHead1) {
+				 // temporary object
+				  var uniqOb2 = {};
+				 // create object attribute with name=value in array, this will not keep dupes
+				  for (var i in fieldHead1)
+					uniqOb2[fieldHead1[i]] = "";
+				  //if object's attributes match array, then no dupes! 
+				  if (fieldHead1.length == Object.keys(uniqOb2).length){
+					//alert('Good');
+				  return true;}
+				  else{
+				  alert('Ledger Entry Has Duplicates. Please check');}
+				}
+				
+				hasDupesInHead(fieldHead1);
+					function hasDupesInMember(fieldMember1) {
+				 // temporary object
+				  var uniqOb3 = {};
+				 // create object attribute with name=value in array, this will not keep dupes
+				  for (var i in fieldMember1)
+					uniqOb3[fieldMember1[i]] = "";
+				  //if object's attributes match array, then no dupes! 
+				  if (fieldMember1.length == Object.keys(uniqOb3).length){
+					
+				  return true;}
+				  else{
+					alert('Ledger Entry Has Duplicates. Please check');
+				  }
+				}
+				
+				hasDupesInMember(fieldMember1);
+				
+				
+				
+				function hasDupesInLedger(fieldArray1) 
+					  {
+					  // temporary object 
+					  var uniqOb = {};
+					  // create object attribute with name=value in array, this will not keep dupes
+					  for (var i in fieldArray1)
+						uniqOb[fieldArray1[i]] = "";
+					  // if object's attributes match array, then no dupes!
+					  if (fieldArray1.length == Object.keys(uniqOb).length){
+						  
+						alert('Good'); 
+						
+					  }
+					  else{
+						alert('Ledger Entry Has Duplicates. Please check');
+					  }
+					
+					}
+					
+					hasDupesInLedger(fieldArray1);
+				
+				
+					function hasDupesInOwner(fieldOwner1)
+					{
+					  // temporary object 
+					  var uniqOb1 = {};
+					  // create object attribute with name=value in array, this will not keep dupes
+					  for (var i in fieldOwner1)
+						uniqOb1[fieldOwner1[i]] = "";
+					  // if object's attributes match array, then no dupes! 
+					  if (fieldOwner1.length == Object.keys(uniqOb1).length){
+						alert('Good');
+						// return true;
+						 
+					  }
+						
+					  else{
+						  alert('Project Owner List Has Duplicates. Please Check');
+					  }
+						
+					}
+				
+					hasDupesInOwner(fieldOwner1);
+					
+		

@@ -1,0 +1,2 @@
+<B><span class="red_clr">ORDER NO</span> : <span class="blue_clr"><?=$timer_value['ENTYEAR']."-".$timer_value['BRNCODE']."-".$timer_value['ENTNUMB']."-".$timer_value['ENTSRNO']."-".$timer_value['SUBSRNO']?></span><br>
+           
